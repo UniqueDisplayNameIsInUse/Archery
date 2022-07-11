@@ -1,3 +1,25 @@
 {
-  "__version__": "1.0.2"
+  "__version__": "1.0.2",
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "PLAYER"
+      },
+      {
+        "index": 2,
+        "name": "ENEMY"
+      },
+      {
+        "index": 3,
+        "name": "PROJECTILE"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 7,
+      "1": 1,
+      "2": 9,
+      "3": 4
+    }
+  }
 }
