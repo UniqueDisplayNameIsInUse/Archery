@@ -15,5 +15,6 @@ export class UIStartup extends Component {
             }
         });
     }
+
 }
 

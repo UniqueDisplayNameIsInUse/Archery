@@ -1,30 +1,35 @@
-import { _decorator, Node, Prefab, Pool } from 'cc';
+import { _decorator, Node, Pool } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Pools')
 export class Pools<T> {
     pools: Map<T, Pool<Node>> = new Map();
 
-    pool(prefab: T): Pool<Node> {
-        return this.pools.get(prefab)!;
+    pool(key: T): Pool<Node> {
+        return this.pools.get(key)!;
     }
 
-    newPool(prefab: T, ctor: () => Node, elementsPerBatch: number, dtor?: (obj: Node) => void) {
+    newPool(key: T, ctor: () => Node, elementsPerBatch: number, dtor?: (obj: Node) => void) {
         let pool = new Pool<Node>(ctor, elementsPerBatch, dtor);
-        this.pools.set(prefab, pool);
+        this.pools.set(key, pool);
     }
 
-    allocc(prefab: T): Node {
-        return this.pool(prefab).alloc();
+    allocc(key: T): Node {
+        return this.pool(key).alloc();
     }
 
-    free(prefab: T, node: Node) {
-        this.pool(prefab).free(node);
+    free(key: T, node: Node) {
+        this.pool(key).free(node);
     }
 
-    destory(prefab: T) {
-        this.pool(prefab).destroy()
+    destory(key: T) {
+        this.pool(key).destroy()
+    }
+
+    destroyAll() {
+        for (let pool of this.pools.values()) {
+            pool.destroy();
+        }
+        this.pools.clear()
     }
 }
-
-export let prefabPools = new Pools<Prefab>();

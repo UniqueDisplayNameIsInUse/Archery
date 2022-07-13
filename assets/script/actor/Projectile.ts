@@ -37,8 +37,8 @@ export class Projectile extends Movable {
         this.rigidbody = this.node.getComponent(RigidBody);
     }
 
-    onDisable() {
-
+    onDestroy() {
+        this.collider.off("onTriggerEnter", this.onTriggerEnter, this);
     }
 
     fire(dir: Vec3) {
@@ -62,8 +62,7 @@ export class Projectile extends Movable {
             let maxAngle = this.angularSpeed.y * deltaTime;
 
             let v = v3()
-            MathUtil.rotateToward(v, this.node.forward, this.forward, math.toRadian(maxAngle))
-            //console.log(v, math.toDegree(Math.acos(dot)), this.forward);
+            MathUtil.rotateToward(v, this.node.forward, this.forward, math.toRadian(maxAngle))            
             this.node.forward = v;
         }
 
@@ -72,8 +71,6 @@ export class Projectile extends Movable {
     }
 
     onTriggerEnter(event: ICollisionEvent) {
-        //log("hit some target", event)
-
         if (event.otherCollider.getGroup() == PhysicsGroup.ENEMY) {
             this.projectProperty!.penetration--;
             if (this.projectProperty!.penetration <= 0) {
