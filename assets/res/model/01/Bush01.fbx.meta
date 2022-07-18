@@ -1,0 +1,138 @@
+{
+  "ver": "2.2.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "b15ba11a-5b57-4138-bf67-2df2783d3bd4",
+  "files": [],
+  "subMetas": {
+    "bc4e8": {
+      "importer": "gltf-mesh",
+      "uuid": "b15ba11a-5b57-4138-bf67-2df2783d3bd4@bc4e8",
+      "displayName": "",
+      "id": "bc4e8",
+      "name": "Bush01.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "48d95": {
+      "importer": "gltf-material",
+      "uuid": "b15ba11a-5b57-4138-bf67-2df2783d3bd4@48d95",
+      "displayName": "",
+      "id": "48d95",
+      "name": "Decidious01Mat.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c237a": {
+      "importer": "gltf-scene",
+      "uuid": "b15ba11a-5b57-4138-bf67-2df2783d3bd4@c237a",
+      "displayName": "",
+      "id": "c237a",
+      "name": "Bush01.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "b15ba11a-5b57-4138-bf67-2df2783d3bd4@c237a",
+    "assetFinder": {
+      "meshes": [
+        "b15ba11a-5b57-4138-bf67-2df2783d3bd4@bc4e8"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "b15ba11a-5b57-4138-bf67-2df2783d3bd4@48d95"
+      ],
+      "scenes": [
+        "b15ba11a-5b57-4138-bf67-2df2783d3bd4@c237a"
+      ]
+    },
+    "materials": {
+      "b15ba11a-5b57-4138-bf67-2df2783d3bd4@48d95": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "1baf0fc9-befa-459c-8bdd-af1a450a0319",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": "1",
+        "_defines": [
+          {
+            "USE_ALBEDO_MAP": true
+          },
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "mainTexture": {
+              "__uuid__": "ea897be4-f485-4f00-bdf6-875e5d5951e2@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            }
+          },
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}

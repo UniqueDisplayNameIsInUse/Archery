@@ -1,0 +1,79 @@
+{
+  "ver": "2.2.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "70f55c95-c567-4ee8-9f85-88d91a8fa5f6",
+  "files": [],
+  "subMetas": {
+    "411d6": {
+      "importer": "gltf-mesh",
+      "uuid": "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@411d6",
+      "displayName": "",
+      "id": "411d6",
+      "name": "Blacksmith01.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "06b60": {
+      "importer": "gltf-material",
+      "uuid": "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@06b60",
+      "displayName": "",
+      "id": "06b60",
+      "name": "Manmade03Mat.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d5d77": {
+      "importer": "gltf-scene",
+      "uuid": "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@d5d77",
+      "displayName": "",
+      "id": "d5d77",
+      "name": "Blacksmith01.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@d5d77",
+    "assetFinder": {
+      "meshes": [
+        "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@411d6"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@06b60"
+      ],
+      "scenes": [
+        "70f55c95-c567-4ee8-9f85-88d91a8fa5f6@d5d77"
+      ]
+    }
+  }
+}

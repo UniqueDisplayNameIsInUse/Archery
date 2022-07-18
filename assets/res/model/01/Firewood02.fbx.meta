@@ -1,0 +1,143 @@
+{
+  "ver": "2.2.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "17dd981d-0f5d-49e0-bb69-2b2ea4d35818",
+  "files": [],
+  "subMetas": {
+    "2ee14": {
+      "importer": "gltf-mesh",
+      "uuid": "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@2ee14",
+      "displayName": "",
+      "id": "2ee14",
+      "name": "FireWood02.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f304d": {
+      "importer": "gltf-material",
+      "uuid": "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@f304d",
+      "displayName": "",
+      "id": "f304d",
+      "name": "Manmade02Mat.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "92e96": {
+      "importer": "gltf-scene",
+      "uuid": "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@92e96",
+      "displayName": "",
+      "id": "92e96",
+      "name": "Firewood02.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@92e96",
+    "assetFinder": {
+      "meshes": [
+        "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@2ee14"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@f304d"
+      ],
+      "scenes": [
+        "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@92e96"
+      ]
+    },
+    "materials": {
+      "17dd981d-0f5d-49e0-bb69-2b2ea4d35818@f304d": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "1baf0fc9-befa-459c-8bdd-af1a450a0319",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {
+            "HAS_SECOND_UV": true,
+            "USE_ALBEDO_MAP": true
+          },
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "occlusion": 0.835,
+            "roughness": 1,
+            "metallic": 0,
+            "specularIntensity": 0.498,
+            "mainTexture": {
+              "__uuid__": "51112e13-33a8-4717-a5bd-167ab61a483d@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            }
+          },
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}

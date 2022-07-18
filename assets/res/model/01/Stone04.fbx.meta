@@ -1,0 +1,138 @@
+{
+  "ver": "2.2.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "917263e5-96b0-4934-a416-9e07a561c465",
+  "files": [],
+  "subMetas": {
+    "27035": {
+      "importer": "gltf-material",
+      "uuid": "917263e5-96b0-4934-a416-9e07a561c465@27035",
+      "displayName": "",
+      "id": "27035",
+      "name": "Rocks01Mat.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "35099": {
+      "importer": "gltf-scene",
+      "uuid": "917263e5-96b0-4934-a416-9e07a561c465@35099",
+      "displayName": "",
+      "id": "35099",
+      "name": "Stone04.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "235c4": {
+      "importer": "gltf-mesh",
+      "uuid": "917263e5-96b0-4934-a416-9e07a561c465@235c4",
+      "displayName": "",
+      "id": "235c4",
+      "name": "Stone04.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "917263e5-96b0-4934-a416-9e07a561c465@35099",
+    "assetFinder": {
+      "meshes": [
+        "917263e5-96b0-4934-a416-9e07a561c465@235c4"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "917263e5-96b0-4934-a416-9e07a561c465@27035"
+      ],
+      "scenes": [
+        "917263e5-96b0-4934-a416-9e07a561c465@35099"
+      ]
+    },
+    "materials": {
+      "917263e5-96b0-4934-a416-9e07a561c465@27035": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "1baf0fc9-befa-459c-8bdd-af1a450a0319",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {
+            "USE_ALBEDO_MAP": true
+          },
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "mainTexture": {
+              "__uuid__": "e2833ef4-5ccc-4b53-a335-e419bd808b98@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            }
+          },
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}

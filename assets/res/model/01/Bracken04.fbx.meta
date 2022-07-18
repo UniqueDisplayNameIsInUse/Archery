@@ -1,0 +1,147 @@
+{
+  "ver": "2.2.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "17b470fd-4ea4-45db-8dce-7e592ae70b69",
+  "files": [],
+  "subMetas": {
+    "c6801": {
+      "importer": "gltf-mesh",
+      "uuid": "17b470fd-4ea4-45db-8dce-7e592ae70b69@c6801",
+      "displayName": "",
+      "id": "c6801",
+      "name": "Bracken04.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "cb207": {
+      "importer": "gltf-material",
+      "uuid": "17b470fd-4ea4-45db-8dce-7e592ae70b69@cb207",
+      "displayName": "",
+      "id": "cb207",
+      "name": "Plants01Mat.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "ba8d2": {
+      "importer": "gltf-scene",
+      "uuid": "17b470fd-4ea4-45db-8dce-7e592ae70b69@ba8d2",
+      "displayName": "",
+      "id": "ba8d2",
+      "name": "Bracken04.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "17b470fd-4ea4-45db-8dce-7e592ae70b69@ba8d2",
+    "assetFinder": {
+      "meshes": [
+        "17b470fd-4ea4-45db-8dce-7e592ae70b69@c6801"
+      ],
+      "skeletons": [],
+      "textures": [],
+      "materials": [
+        "17b470fd-4ea4-45db-8dce-7e592ae70b69@cb207"
+      ],
+      "scenes": [
+        "17b470fd-4ea4-45db-8dce-7e592ae70b69@ba8d2"
+      ]
+    },
+    "materials": {
+      "17b470fd-4ea4-45db-8dce-7e592ae70b69@cb207": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "1baf0fc9-befa-459c-8bdd-af1a450a0319",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {
+            "USE_ALBEDO_MAP": true,
+            "USE_ALPHA_TEST": true
+          },
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "mainColor": {
+              "__type__": "cc.Color",
+              "r": 169,
+              "g": 175,
+              "b": 125,
+              "a": 255
+            },
+            "alphaThreshold": 0.563,
+            "mainTexture": {
+              "__uuid__": "7f499fa8-b8b7-42dd-92c0-50397ff7c39b@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            }
+          },
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}
