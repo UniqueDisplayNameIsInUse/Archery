@@ -63,12 +63,11 @@
         "a": 255
       },
       "occlusion": 0.845,
-      "roughness": 1,
       "metallic": 0,
       "specularIntensity": 0.401,
       "normalStrength": 1.2,
       "mainTexture": {
-        "__uuid__": "4bb5535b-e06e-4dce-b301-98d211476bb0@6c48a",
+        "__uuid__": "79042293-2cf6-4e9e-8fb7-378f8cddce41@6c48a",
         "__expectedType__": "cc.Texture2D"
       },
       "normalMap": {
@@ -76,7 +75,7 @@
         "__expectedType__": "cc.Texture2D"
       },
       "pbrMap": {
-        "__uuid__": "21f92701-270d-44cf-b09d-7a72aaa0eced@3c318",
+        "__uuid__": "21f92701-270d-44cf-b09d-7a72aaa0eced@6c48a",
         "__expectedType__": "cc.Texture2D"
       }
     },
