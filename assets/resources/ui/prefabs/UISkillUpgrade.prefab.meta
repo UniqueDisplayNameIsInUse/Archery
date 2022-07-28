@@ -2,12 +2,12 @@
   "ver": "1.1.39",
   "importer": "prefab",
   "imported": true,
-  "uuid": "a492744d-6d35-4dc7-aaec-39f0bd5f98cb",
+  "uuid": "a02d304c-9c2f-4f41-ae56-06f40efb6d33",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "ZhuZi_D"
+    "syncNodeName": "UISkillUpgrade"
   }
 }

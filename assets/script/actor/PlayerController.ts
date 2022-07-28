@@ -139,7 +139,7 @@ export class PlayerController extends Actor {
 
         }
 
-        AudioManager.inst.playSfx(AudioDefine.SFX_SHOOT);
+        //AudioManager.inst.playSfx(AudioDefine.SFX_SHOOT);
     }
 
     set bulletCount(count: number) {

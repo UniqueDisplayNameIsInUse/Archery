@@ -1,8 +1,9 @@
 import { _decorator, Component, input, Input, EventKeyboard, KeyCode, SkeletalAnimation, EventMouse } from 'cc';
+import { IInput } from '../input/IInput';
 const { ccclass, property } = _decorator;
 
 @ccclass('KeyboardInput')
-export class KeyboardInput extends Component {
+export class KeyboardInput extends Component implements IInput{
 
     vertical: number = 0.0;
     horizontal: number = 0.0;
@@ -27,7 +28,6 @@ export class KeyboardInput extends Component {
                 this.vertical = 1.0;
                 break;
             case KeyCode.KEY_A:
-
                 this.horizontal = -1.0;
                 break;
             case KeyCode.KEY_D:
@@ -53,6 +53,7 @@ export class KeyboardInput extends Component {
                 this.horizontal = 0;
                 break;
         }
+
     }
 
     onMouseButtonDown(event: EventMouse) {
