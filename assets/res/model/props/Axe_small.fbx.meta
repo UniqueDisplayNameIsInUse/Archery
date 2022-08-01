@@ -2,15 +2,15 @@
   "ver": "2.2.0",
   "importer": "fbx",
   "imported": true,
-  "uuid": "7a8afa3a-49e8-4c95-8920-c3f75b939b85",
+  "uuid": "6cdd3ee8-aab6-463b-87d4-9ac16131a929",
   "files": [],
   "subMetas": {
-    "ae9ee": {
+    "a64ef": {
       "importer": "gltf-mesh",
-      "uuid": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@ae9ee",
+      "uuid": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@a64ef",
       "displayName": "",
-      "id": "ae9ee",
-      "name": "LanGan_AHa.mesh",
+      "id": "a64ef",
+      "name": "Axe_small.mesh",
       "userData": {
         "gltfIndex": 0
       },
@@ -22,12 +22,12 @@
       ],
       "subMetas": {}
     },
-    "425ef": {
+    "df7df": {
       "importer": "gltf-embeded-image",
-      "uuid": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@425ef",
+      "uuid": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@df7df",
       "displayName": "",
-      "id": "425ef",
-      "name": "贴图 #2.image",
+      "id": "df7df",
+      "name": "贴图 #1.image",
       "userData": {
         "gltfIndex": 0
       },
@@ -39,12 +39,12 @@
       ],
       "subMetas": {}
     },
-    "59f96": {
+    "a96a6": {
       "importer": "texture",
-      "uuid": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@59f96",
+      "uuid": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@a96a6",
       "displayName": "",
-      "id": "59f96",
-      "name": "贴图 #2.texture",
+      "id": "a96a6",
+      "name": "贴图 #1.texture",
       "userData": {
         "wrapModeS": "repeat",
         "wrapModeT": "repeat",
@@ -53,7 +53,7 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@425ef"
+        "imageUuidOrDatabaseUri": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@df7df"
       },
       "ver": "1.0.21",
       "imported": true,
@@ -62,12 +62,12 @@
       ],
       "subMetas": {}
     },
-    "ba811": {
+    "67efd": {
       "importer": "gltf-material",
-      "uuid": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@ba811",
+      "uuid": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@67efd",
       "displayName": "",
-      "id": "ba811",
-      "name": "youanzong.material",
+      "id": "67efd",
+      "name": "Props.material",
       "userData": {
         "gltfIndex": 0
       },
@@ -78,12 +78,12 @@
       ],
       "subMetas": {}
     },
-    "881ad": {
+    "1eaab": {
       "importer": "gltf-scene",
-      "uuid": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@881ad",
+      "uuid": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@1eaab",
       "displayName": "",
-      "id": "881ad",
-      "name": "LanGan_AHa.prefab",
+      "id": "1eaab",
+      "name": "Axe_small.prefab",
       "userData": {
         "gltfIndex": 0
       },
@@ -98,32 +98,32 @@
   "userData": {
     "imageMetas": [
       {
-        "name": "贴图 #2",
-        "uri": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@425ef"
+        "name": "贴图 #1",
+        "uri": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@df7df"
       }
     ],
     "legacyFbxImporter": false,
     "fbx": {
       "smartMaterialEnabled": true
     },
-    "redirect": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@881ad",
+    "redirect": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@1eaab",
     "assetFinder": {
       "meshes": [
-        "7a8afa3a-49e8-4c95-8920-c3f75b939b85@ae9ee"
+        "6cdd3ee8-aab6-463b-87d4-9ac16131a929@a64ef"
       ],
       "skeletons": [],
       "textures": [
-        "7a8afa3a-49e8-4c95-8920-c3f75b939b85@59f96"
+        "6cdd3ee8-aab6-463b-87d4-9ac16131a929@a96a6"
       ],
       "materials": [
-        "7a8afa3a-49e8-4c95-8920-c3f75b939b85@ba811"
+        "6cdd3ee8-aab6-463b-87d4-9ac16131a929@67efd"
       ],
       "scenes": [
-        "7a8afa3a-49e8-4c95-8920-c3f75b939b85@881ad"
+        "6cdd3ee8-aab6-463b-87d4-9ac16131a929@1eaab"
       ]
     },
     "materials": {
-      "7a8afa3a-49e8-4c95-8920-c3f75b939b85@ba811": {
+      "6cdd3ee8-aab6-463b-87d4-9ac16131a929@67efd": {
         "__type__": "cc.Material",
         "_name": "",
         "_objFlags": 0,
@@ -173,14 +173,14 @@
           {
             "mainColor": {
               "__type__": "cc.Color",
-              "r": 114,
-              "g": 185,
-              "b": 185,
+              "r": 226,
+              "g": 247,
+              "b": 253,
               "a": 255
             },
             "metallic": 0,
             "mainTexture": {
-              "__uuid__": "7a8afa3a-49e8-4c95-8920-c3f75b939b85@59f96",
+              "__uuid__": "6cdd3ee8-aab6-463b-87d4-9ac16131a929@a96a6",
               "__expectedType__": "cc.Texture2D"
             }
           },
