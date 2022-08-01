@@ -1,5 +1,6 @@
-import { _decorator, Component, ProgressBar, Label, Button } from 'cc';
+import { _decorator, Component, ProgressBar, Label, Button, director, resources } from 'cc';
 import { PlayerController } from '../actor/PlayerController';
+import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass("UISkill")
@@ -39,6 +40,10 @@ export class UIGame extends Component {
     @property(UISkill)
     uiSkills: UISkill = new UISkill()
 
+    isPaused:boolean = false;
+
+    labelPause: Label | null = null;
+
     start() {
         this.player?.node.on("onExpGain", this.onExpGain, this);
         this.player?.node.on("onPlayerUpgrade", this.onUpgrade, this);
@@ -47,18 +52,34 @@ export class UIGame extends Component {
         this.levelLabel!.string = "Level: " + this.player?.level;
 
         this.uiSkills.show(this.player!.skillPoint>0);
+
+        this.labelPause = this.node.getChildByPath("Layout/BtnPause/Label")!.getComponent(Label);
     }   
 
-    onExitGame() {
+    onDestroy(){
+        this.uiSkills = null;
+    }
 
+    onExitGame() {        
+        resources.releaseUnusedAssets()                
+        director.loadScene("startup")
     }
 
     onPauseGame() {
-
+        console.log("onPauseGame")
+        if(!this.isPaused){
+            director.pause()        
+            this.isPaused = true;
+            this.labelPause.string = "Resume";
+        }else{
+            this.isPaused = false;
+            director.resume();
+            this.labelPause.string = "Pause";            
+        }        
     }
 
     onOpenSetting() {
-
+        UIManager.inst.openPanel("UISetting")
     }
 
     onUpgrade() {

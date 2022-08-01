@@ -1,7 +1,6 @@
-import { _decorator, Component, Node, SkeletalAnimation, Animation, SkeletalAnimationState, log, director, logID, Collider, Vec3 } from 'cc';
+import { _decorator, SkeletalAnimation, Animation, SkeletalAnimationState, Collider, Vec3, Component, RigidBody } from 'cc';
 import { Movable } from './Movable';
-import { PhysicsGroup } from './PhysicsGroup';
-const { ccclass, property } = _decorator;
+const { ccclass, property, requireComponent } = _decorator;
 
 export class StateDefine {
 
@@ -41,6 +40,10 @@ export class Actor extends Movable {
         this.collider = this.node.getComponent(Collider);
     }
 
+    onDestroy(){
+        this.skeletalAnimation?.off(Animation.EventType.FINISHED, this.onAnimationFinished, this);
+    }
+
     update(deltaTime: number) {
 
         if (this.currState == StateDefine.Die) {
@@ -72,7 +75,7 @@ export class Actor extends Movable {
             return;
         }
 
-        if(this.currState == StateDefine.Run){
+        if (this.currState == StateDefine.Run) {
             this.stopMove()
         }
 

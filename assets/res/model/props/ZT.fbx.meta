@@ -1,5 +1,5 @@
 {
-  "ver": "2.2.0",
+  "ver": "2.3.0",
   "importer": "fbx",
   "imported": true,
   "uuid": "7bf56d61-cd34-4855-93be-b3b93463f459",
@@ -71,7 +71,7 @@
         "isUuid": true,
         "imageUuidOrDatabaseUri": "7bf56d61-cd34-4855-93be-b3b93463f459@1cdc4"
       },
-      "ver": "1.0.21",
+      "ver": "1.0.22",
       "imported": true,
       "files": [
         ".json"

@@ -30,11 +30,9 @@ export class MathUtil {
     }
 
     static rotateToward(out: Vec3, src: Vec3, dest: Vec3, maxAngleDelta: number) {
-
         let up = v3()
         Vec3.cross(up, src, dest);
         this.rotateAround(out, src, up, maxAngleDelta);
-
     }
 }
 

@@ -1,4 +1,5 @@
 import { director, find, instantiate, log, macro, math, Node, Pool, Prefab, randomRange, randomRangeInt, Scene, v3, Vec3, _decorator } from 'cc';
+import { AudioDefine, AudioManager } from '../audio/AudioManager';
 import { Map } from '../map/Map';
 import { MathUtil } from '../util/MathUtil';
 import { Actor, StateDefine } from './Actor';
@@ -46,8 +47,9 @@ export class PlayerController extends Actor {
     projectilePool: Pool<Node> | null = null;
 
     start() {
-        this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);
         super.start();
+
+        this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);        
         this.node.on("onKilled", this.onKilled, this);
 
         this.bulletCount = 1;
@@ -64,8 +66,17 @@ export class PlayerController extends Actor {
         )
     }
 
-    update(dt: number) {
+    onDestroy(){
+        super.onDestroy()
+        
+        this.node.off("onFrameAttackLoose", this.onFrameAttackLoose, this);
+        this.node.off("onKilled", this.onKilled, this);
 
+        this.projectilePool.destroy()
+        this.projectilePool = null;
+    }
+
+    update(dt: number) {
         if (this.currState == StateDefine.Die || this.currState == StateDefine.Hit) {
             return;
         }
@@ -127,6 +138,8 @@ export class PlayerController extends Actor {
             projectile?.fire(this.node.forward);
 
         }
+
+        //AudioManager.inst.playSfx(AudioDefine.SFX_SHOOT);
     }
 
     set bulletCount(count: number) {

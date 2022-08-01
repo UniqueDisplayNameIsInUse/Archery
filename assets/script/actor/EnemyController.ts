@@ -1,4 +1,5 @@
 import { AmbientInfo, Animation, CCFloat, Collider, find, ICollisionEvent, InstancedBuffer, log, macro, math, PhysicsSystem, SkeletalAnimationState, v3, Vec3, _decorator } from 'cc';
+import { AudioDefine, AudioManager } from '../audio/AudioManager';
 import { EffectManager } from '../effect/EffectManager';
 import { MathUtil } from '../util/MathUtil';
 import { Actor, StateDefine } from './Actor';
@@ -26,9 +27,10 @@ export class EnemyController extends Actor {
     enableAI: boolean = true;
 
     start() {
+        super.start()
+
         this.target = find("Player")!.getComponent(Actor);
         this.schedule(this.think, 1.0, macro.REPEAT_FOREVER, 2.0)
-        super.start()
 
         const collider = this.node.getComponent(Collider);
         collider?.on("onTriggerEnter", this.onTriggerEnter, this);
@@ -36,6 +38,14 @@ export class EnemyController extends Actor {
         this.node.on("onFrameAttack", this.onFrameAttack, this);
 
         this.skeletalAnimation?.on(Animation.EventType.FINISHED, this.onDieFinished, this);
+    }
+
+    onDestroy() {
+        super.onDestroy()
+        const collider = this.node.getComponent(Collider);
+        collider?.off("onTriggerEnter", this.onTriggerEnter, this);
+
+        this.node.off("onFrameAttack", this.onFrameAttack, this);
     }
 
     think() {
@@ -104,7 +114,9 @@ export class EnemyController extends Actor {
             let hurtDirection = v3()
             Vec3.subtract(hurtDirection, event.otherCollider.node.worldPosition, event.selfCollider.node.worldPosition);
             hurtDirection.normalize();
-            this.hurt(hostActor!.damange, hostActor!, hurtDirection);            
+            this.hurt(hostActor!.damange, hostActor!, hurtDirection);
+
+            AudioManager.inst.playSfx(AudioDefine.SFX_HIT);
         }
     }
 

@@ -1,5 +1,4 @@
-import { _decorator, Component, Node, resources, Prefab, instantiate, Asset, InstancedBuffer } from 'cc';
-import { UIPanel } from './UIPanel';
+import { _decorator, Component, resources, Prefab, instantiate } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIManager')
@@ -14,12 +13,18 @@ export class UIManager extends Component {
         UIManager._inst = this;
     }
 
-    openPanel(name: string) {
+    onDestroy() {
+        UIManager._inst = null;
+    }
+
+    openPanel(name: string, bringToTop: boolean = true) {
 
         let panel = this.node.getChildByName(name);
         if (panel != null) {
             panel.active = true;
-            panel.setSiblingIndex(this.node.children.length - 1);
+            if (bringToTop) {
+                panel.setSiblingIndex(this.node.children.length - 1);
+            }
             return;
         }
 
@@ -30,25 +35,18 @@ export class UIManager extends Component {
             }
 
             let node = instantiate(data);
-            let uiPanel = node.getComponent(UIPanel);
-            if (uiPanel == null) {
-                uiPanel = node.addComponent(UIPanel);
-            }
-            uiPanel.panelName = name;
             this.node.addChild(node);
         });
 
     }
 
     closePanel(name: string, destory: boolean) {
-        if (destory) {
-            let panel = this.node.getChildByName(name);
-            if (panel != null) {
-                if (destory) {
-                    panel.removeFromParent();
-                } else {
-                    panel.active = false;
-                }
+        let panel = this.node.getChildByName(name);
+        if (panel != null) {
+            if (destory) {
+                panel.removeFromParent();
+            } else {
+                panel.active = false;
             }
         }
     }

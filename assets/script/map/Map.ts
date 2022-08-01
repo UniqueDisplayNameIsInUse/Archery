@@ -1,6 +1,7 @@
 import { _decorator, Component, instantiate, BoxCollider, Rect, v2, Prefab, CCInteger, Vec3, Scene, macro, v3, math, log, director, size, Size, Node, Pool, RigidBody, randomRange } from 'cc';
 import { Actor } from '../actor/Actor';
 import { EnemyController } from '../actor/EnemyController';
+import { Pools } from '../util/Pools';
 const { ccclass, property } = _decorator;
 
 @ccclass('Map')
@@ -28,7 +29,9 @@ export class Map extends Component {
 
     hp: number = 10;
 
-    maxAlive: number = 100;    
+    maxAlive: number = 100;
+
+    enemyPools: Pools<number> = new Pools()
 
     start() {
         Map._inst = this;
@@ -51,11 +54,12 @@ export class Map extends Component {
         }, 10, macro.REPEAT_FOREVER)
     }
 
-    randomSpawn() {
-        // if (this.enemies.length >= 100) {
-        //     return;
-        // }
+    onDestroy() {
+        this.enemyPools.destroyAll()
+        this.enemyPools = null;
+    }
 
+    randomSpawn() {      
         this.spawnPos.x = math.randomRange(this.spawnRect.xMin, this.spawnRect.xMax);
         this.spawnPos.z = math.randomRange(this.spawnRect.yMin, this.spawnRect.yMax);
         this.doSpawn(this.spawnPos)
@@ -75,15 +79,15 @@ export class Map extends Component {
         director.getScene()?.addChild(enemy);
 
         let enemyController = enemy.getComponent(EnemyController);
-        enemyController!.hp = this.hp;  
-        
+        enemyController!.hp = this.hp;
+
         let rigid = enemy.getComponent(RigidBody)!;
         rigid.mass = randomRange(0.3, 2.0);
 
         enemy.scale = v3(rigid.mass, rigid.mass, rigid.mass);
     }
 
-    onEnemyDead(actor: EnemyController) {
+    onEnemyDead(actor: EnemyController) {        
         let i = this.enemies.indexOf(actor.node);
         if (i < 0) {
             throw new Error('actor not found')
