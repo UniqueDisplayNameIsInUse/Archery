@@ -1,8 +1,8 @@
 {
   "__version__": "3.0.3",
   "game": {
-    "app_id": "676808533",
-    "name": "Archery",
+    "name": "未知游戏",
+    "app_id": "UNKNOW",
     "c_id": "0"
   },
   "appConfigMaps": [
