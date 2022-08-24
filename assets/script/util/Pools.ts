@@ -1,28 +1,28 @@
-import { _decorator, Node, Pool } from 'cc';
+import { _decorator, Pool } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Pools')
-export class Pools<T> {
-    pools: Map<T, Pool<Node>> = new Map();
+export class Pools<TKey, TValue> {
+    pools: Map<TKey, Pool<TValue>> = new Map();
 
-    pool(key: T): Pool<Node> {
+    pool(key: TKey): Pool<TValue> {
         return this.pools.get(key)!;
     }
 
-    newPool(key: T, ctor: () => Node, elementsPerBatch: number, dtor?: (obj: Node) => void) {
-        let pool = new Pool<Node>(ctor, elementsPerBatch, dtor);
+    newPool(key: TKey, ctor: () => TValue, elementsPerBatch: number, dtor?: (obj: TValue) => void) {
+        let pool = new Pool<TValue>(ctor, elementsPerBatch, dtor);
         this.pools.set(key, pool);
     }
 
-    allocc(key: T): Node {
+    allocc(key: TKey): TValue {
         return this.pool(key).alloc();
     }
 
-    free(key: T, node: Node) {
+    free(key: TKey, node: TValue) {
         this.pool(key).free(node);
     }
 
-    destory(key: T) {
+    destory(key: TKey) {
         this.pool(key).destroy()
     }
 

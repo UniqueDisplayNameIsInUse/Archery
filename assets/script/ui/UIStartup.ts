@@ -1,20 +1,16 @@
-import { _decorator, Component, Node, director } from 'cc';
+import { _decorator, Component, director, Button } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIStartup')
 export class UIStartup extends Component {
 
-    start() {
-
+    start() {   
+        let btnStart = this.node.getChildByName("BtnStart");
+        btnStart.on(Button.EventType.CLICK, this.onClickEnterGame, this);
     }
 
     onClickEnterGame() {
-        director.loadScene("game", (err, scene) => {
-            if( err != null ){
-                throw err;
-            }
-        });
-    }
-
+        director.loadScene("game");
+    }    
 }
 

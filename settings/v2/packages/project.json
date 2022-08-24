@@ -20,6 +20,18 @@
       "1": 1,
       "2": 9,
       "3": 4
+    },
+    "defaultMaterial": {
+      "rollingFriction": 0.1,
+      "spinningFriction": 0.1
+    }
+  },
+  "general": {
+    "designResolution": {
+      "width": 1280,
+      "height": 720,
+      "fitHeight": false,
+      "fitWidth": true
     }
   }
 }

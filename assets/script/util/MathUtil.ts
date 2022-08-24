@@ -1,4 +1,4 @@
-import { _decorator, IVec3Like, Vec3, v3 } from 'cc';
+import { _decorator, IVec3Like, Vec3, v3, math } from 'cc';
 
 let tempVec: Vec3 = v3()
 let tempVec2: Vec3 = v3()
@@ -33,6 +33,6 @@ export class MathUtil {
         let up = v3()
         Vec3.cross(up, src, dest);
         this.rotateAround(out, src, up, maxAngleDelta);
-    }
+    }    
 }
 

@@ -1,10 +1,10 @@
-import { AmbientInfo, Animation, CCFloat, Collider, find, ICollisionEvent, InstancedBuffer, log, macro, math, PhysicsSystem, SkeletalAnimationState, v3, Vec3, _decorator } from 'cc';
+import { Animation, CCFloat, Collider, find, ICollisionEvent, macro, SkeletalAnimationState, v3, Vec3, _decorator } from 'cc';
 import { AudioDefine, AudioManager } from '../audio/AudioManager';
-import { EffectManager } from '../effect/EffectManager';
-import { MathUtil } from '../util/MathUtil';
-import { Actor, StateDefine } from './Actor';
+import { GameMain } from '../GameMain';
+import { Actor } from './Actor';
 import { PhysicsGroup } from './PhysicsGroup';
 import { Projectile } from './Projectile';
+import { StateDefine } from './StateDefine';
 const { ccclass, property } = _decorator;
 
 class AIType {
@@ -42,6 +42,8 @@ export class EnemyController extends Actor {
 
     onDestroy() {
         super.onDestroy()
+        this.unschedule(this.think);
+
         const collider = this.node.getComponent(Collider);
         collider?.off("onTriggerEnter", this.onTriggerEnter, this);
 
@@ -49,9 +51,6 @@ export class EnemyController extends Actor {
     }
 
     think() {
-
-        //log("think");
-
         if (this.target == null) {
             return;
         }
@@ -60,8 +59,6 @@ export class EnemyController extends Actor {
             return;
         }
 
-        this.fire = false;
-
         const distance = Vec3.distance(this.node.worldPosition, this.target.node.worldPosition);
 
         if (distance > this.attackRange) {
@@ -69,8 +66,9 @@ export class EnemyController extends Actor {
             return;
         }
 
-        this.aiType = AIType.Attack;
-        this.fire = true;
+        this.aiType = AIType.Attack;   
+        
+        this.attack();
     }
 
     update(deltaTime: number) {
@@ -86,16 +84,11 @@ export class EnemyController extends Actor {
             return;
         }
 
-        if (this.target.dead) {
-            return;
-        }
-
         switch (this.aiType) {
             case AIType.Chase:
                 let temp = v3();
-                Vec3.subtract(temp, this.target!.node.worldPosition, this.node.worldPosition);
-                MathUtil.rotateToward(this.forward, this.node.forward, temp, math.toRadian(this.angularSpeed.y))
-                this.node.forward = this.forward;
+                Vec3.subtract(temp, this.target!.node.worldPosition, this.node.worldPosition);                                
+                this.forward = temp.normalize()
                 this.changeState(StateDefine.Run);
                 break;
             case AIType.Attack:
@@ -140,7 +133,7 @@ export class EnemyController extends Actor {
 
     onDieFinished(eventType: Animation.EventType, state: SkeletalAnimationState) {
         if (state.name == StateDefine.Die) {
-            EffectManager.inst?.playDieEffect(this.node.worldPosition);
+            GameMain.EffectManager?.playDieEffect(this.node.worldPosition);
             this.node.removeFromParent()
         }
     }

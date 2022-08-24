@@ -1,32 +1,11 @@
 import { _decorator, Component, ProgressBar, Label, Button, director, resources } from 'cc';
-import { PlayerController } from '../actor/PlayerController';
-import { UIManager } from './UIManager';
+import { Events } from '../events/Events';
+import { GameMain } from '../GameMain';
+import { UIUtil } from './UIUtil';
 const { ccclass, property } = _decorator;
-
-@ccclass("UISkill")
-class UISkill {
-
-    @property(Button)
-    btnPentration: Button | null = null;
-
-    @property(Button)
-    btnAddBulletCount: Button | null = null;
-
-    @property(Button)
-    btnAddChaseRate: Button | null = null;
-
-    show(show:boolean){
-        this.btnPentration!.node.active = show;
-        this.btnAddBulletCount!.node.active = show;
-        this.btnAddChaseRate!.node.active = show;
-    }
-}
 
 @ccclass('UIGame')
 export class UIGame extends Component {
-
-    @property(PlayerController)
-    player: PlayerController | null = null;
 
     @property(ProgressBar)
     expBar: ProgressBar | null = null;
@@ -37,79 +16,53 @@ export class UIGame extends Component {
     @property(Label)
     expLabel: Label | null = null;
 
-    @property(UISkill)
-    uiSkills: UISkill = new UISkill()
-
-    isPaused:boolean = false;
+    isPaused: boolean = false;
 
     labelPause: Label | null = null;
 
+    btnSetting: Button | null = null;
+
     start() {
-        this.player?.node.on("onExpGain", this.onExpGain, this);
-        this.player?.node.on("onPlayerUpgrade", this.onUpgrade, this);
+        GameMain.PlayerController?.node.on(Events.onExpGain, this.onExpGain, this);
+        GameMain.PlayerController?.node.on(Events.onPlayerUpgrade, this.onUpgrade, this);
 
         this.onExpGain();
-        this.levelLabel!.string = "Level: " + this.player?.level;
+        this.levelLabel!.string = "Level: " + GameMain.PlayerController?.level;
 
-        this.uiSkills.show(this.player!.skillPoint>0);
-
-        this.labelPause = this.node.getChildByPath("Layout/BtnPause/Label")!.getComponent(Label);
-    }   
-
-    onDestroy(){
-        this.uiSkills = null;
+        this.btnSetting = this.node.getChildByPath("Layout/BtnSetting").getComponent(Button);
+        this.btnSetting.node.on(Button.EventType.CLICK, this.onOpenSetting, this);
     }
 
-    onExitGame() {        
-        resources.releaseUnusedAssets()                
+    onDisable() {
+        this.btnSetting.node.off(Button.EventType.CLICK, this.onOpenSetting, this);
+    }
+
+    onExitGame() {
+        resources.releaseUnusedAssets()
         director.loadScene("startup")
     }
 
     onPauseGame() {
         console.log("onPauseGame")
-        if(!this.isPaused){
-            director.pause()        
-            this.isPaused = true;
-            this.labelPause.string = "Resume";
-        }else{
-            this.isPaused = false;
-            director.resume();
-            this.labelPause.string = "Pause";            
-        }        
     }
 
-    onOpenSetting() {
-        UIManager.inst.openPanel("UISetting")
+    onOpenSetting() {        
+        //GameMain.UIManager.openPanel("UISetting")
+
+        UIUtil.openPanel("UISkillUpgrade");
     }
 
     onUpgrade() {
-        this.levelLabel!.string = "Level: " + this.player?.level;
-        this.uiSkills.show(true)        
+        this.levelLabel!.string = "Level: " + GameMain.PlayerController?.level;
+
+        UIUtil.openPanel("UISkillUpgrade");
     }
 
     onExpGain() {
-        this.expBar!.progress = this.player!.exp / this.player!.maxExp;
-        this.expLabel!.string = this.player!.exp.toFixed() + "/" + this.player!.maxExp.toFixed();
-    }
-
-    onAddPenetration() {
-        this.player!.penetraion += 10;
-        this.onSkillAdd();
-    }
-
-    onAddBulletCount() {
-        this.player!.bulletCount++;
-        this.onSkillAdd();
-    }
-
-    onAddChaseRate() {
-        this.player!.chaseRate += 10;
-        this.onSkillAdd();
-    }
-
-    onSkillAdd(){
-        this.player!.skillPoint--;
-        this.uiSkills.show(this.player!.skillPoint>0);
+        if (GameMain.PlayerController) {
+            this.expBar!.progress = GameMain.PlayerController.exp / GameMain.PlayerController.maxExp;
+            this.expLabel!.string = GameMain.PlayerController.exp.toFixed() + "/" + GameMain.PlayerController.maxExp.toFixed();
+        }
     }
 }
 

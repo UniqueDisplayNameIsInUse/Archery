@@ -3,18 +3,19 @@ import { PhysicsGroup } from './PhysicsGroup';
 
 export class ProjectileProperty {
 
-    penetration: number = 1;
+    /**
+     * 穿透
+     */
+    penetration: number = 1;   
 
-    destoryOnHit: boolean = false;
+    /**
+     * 时长
+     */
+    liftTime: number = 3.0;
 
-    generateChildCount: number = 0;
-
-    rotateAround: boolean = true;
-
-    duration: number = 3.0;
-
-    chase: boolean = false;
-
-    chageGroup: number | PhysicsGroup = PhysicsGroup.ENEMY;
+    /**
+     * 追踪
+     */
+    chase: boolean = false;    
 }
 

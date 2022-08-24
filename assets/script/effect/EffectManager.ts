@@ -1,13 +1,9 @@
 import { _decorator, Component, Node, resources, Prefab, Vec3, Pool, instantiate, director, ParticleSystem, Scene, TERRAIN_NORTH_INDEX } from 'cc';
+import { GameMain } from '../GameMain';
 const { ccclass, property } = _decorator;
 
 @ccclass('EffectManager')
 export class EffectManager extends Component {
-
-    static _inst: EffectManager | null = null;
-    static get inst(): EffectManager | null {
-        return this._inst;
-    }
 
     @property(Prefab)
     explorePrefab: Prefab | null = null;
@@ -20,7 +16,7 @@ export class EffectManager extends Component {
     diePool: Pool<Node> | null = null;
 
     start() {
-        EffectManager._inst = this;
+        GameMain.EffectManager = this;
 
         this.explorePool = new Pool((): Node => {
             return instantiate(this.explorePrefab!)
@@ -37,6 +33,10 @@ export class EffectManager extends Component {
         })
     }
 
+    onDestroy(){
+        GameMain.EffectManager = null;
+    }
+
     playExplore(worldPosition: Vec3) {
         this.play(this.explorePool!, worldPosition);
     }
@@ -48,8 +48,6 @@ export class EffectManager extends Component {
     play(pool: Pool<Node>, worldPosition: Vec3) {
         let node = pool.alloc()
         
-        //console.log(node, worldPosition);       
-
         director.getScene()?.addChild(node);
         node.worldPosition = worldPosition;
         node.active = true;

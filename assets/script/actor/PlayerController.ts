@@ -1,21 +1,17 @@
-import { director, find, instantiate, log, macro, math, Node, Pool, Prefab, randomRange, randomRangeInt, Scene, v3, Vec3, _decorator } from 'cc';
-import { AudioDefine, AudioManager } from '../audio/AudioManager';
-import { Map } from '../map/Map';
+import { Component, director, instantiate, math, Node, Pool, Prefab, randomRange, randomRangeInt, v3, Vec3, _decorator } from 'cc';
+import { Events } from '../events/Events';
+import { VirtualInput } from '../input/VirtualInput';
+import { GameMain } from '../GameMain';
 import { MathUtil } from '../util/MathUtil';
-import { Actor, StateDefine } from './Actor';
-import { KeyboardInput } from './KeyboardInput';
+import { Actor } from './Actor';
 import { Projectile } from './Projectile';
 import { ProjectileProperty } from './ProjectileProperty';
+import { StateDefine } from './StateDefine';
 const { ccclass, property, requireComponent } = _decorator;
 
 @ccclass('PlayerController')
-@requireComponent(KeyboardInput)
-export class PlayerController extends Actor {
-
-    @property(KeyboardInput)
-    keyboardInput: KeyboardInput | null = null;
-
-    forward: Vec3 = v3()
+@requireComponent(Actor)
+export class PlayerController extends Component {
 
     @property(Node)
     bow: Node | null = null;
@@ -38,7 +34,7 @@ export class PlayerController extends Actor {
 
     private _bulletCount: number = 0;
 
-    private _splitAngle: number[] = []
+    private _splitAngle: number[] = [];
 
     private _chaseRate: number = 5.0;
 
@@ -46,13 +42,19 @@ export class PlayerController extends Actor {
 
     projectilePool: Pool<Node> | null = null;
 
-    start() {
-        super.start();
+    actor: Actor | null = null;
 
-        this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);        
-        this.node.on("onKilled", this.onKilled, this);
+    onLoad(){
+        GameMain.PlayerController = this;
+    }
 
-        this.bulletCount = 1;
+    start() {        
+        this.actor = this.node.getComponent(Actor);
+        this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);
+        this.node.on(Events.onKilled, this.onKilled, this);
+        this.actor.onStateChanged = this.onStateChanged;
+
+        this.bulletCount = 10;
 
         this.projectilePool = new Pool<Node>(
             (): Node => {
@@ -66,57 +68,64 @@ export class PlayerController extends Actor {
         )
     }
 
-    onDestroy(){
-        super.onDestroy()
-        
+    onDestroy() {
+        GameMain.PlayerController = null;
+
         this.node.off("onFrameAttackLoose", this.onFrameAttackLoose, this);
-        this.node.off("onKilled", this.onKilled, this);
+        this.node.off(Events.onKilled, this.onKilled, this);
 
         this.projectilePool.destroy()
         this.projectilePool = null;
     }
 
     update(dt: number) {
-        if (this.currState == StateDefine.Die || this.currState == StateDefine.Hit) {
+        if (this.actor.currState == StateDefine.Die || this.actor.currState == StateDefine.Hit) {
             return;
         }
 
-        this.fire = this.keyboardInput!.fire;
         const len = this.handleInput();
         if (len > 0) {
-            this.changeState(StateDefine.Run);
-            this.node.forward = this.forward;
-        } else if (this.currState != StateDefine.Attack) {
-            this.changeState(StateDefine.Idle);
+            this.actor.changeState(StateDefine.Run);            
+        } else if (this.actor.currState != StateDefine.Attack) {
+            this.actor.changeState(StateDefine.Idle);
         }
-
-        super.update(dt);
     }
 
-    handleInput(): number {
-        this.forward.x = this.keyboardInput!.horizontal;
-        this.forward.z = this.keyboardInput!.vertical;
-        this.forward.normalize();
-        return this.forward.length();
+    handleInput(): number {    
+        let x = VirtualInput.horizontal;
+        let y = VirtualInput.vertical;
+
+        this.actor.forward.x = x;
+        this.actor.forward.z = -y;
+        this.actor.forward.y = 0;
+        this.actor.forward.normalize();
+        return this.actor.forward.length();
+    }
+
+    onStateChanged(actor:Actor, state: StateDefine) {
+        if (state == StateDefine.Idle) {
+            //1. 查找面前是否有怪物
+
+            //2. 如果有射击
+            //actor?.changeState(StateDefine.Attack)
+        }
     }
 
     onFrameAttackLoose() {
-        //log("onFrameAttackLoose")
+
         const arrowStartPos = this.bowstring!.worldPosition;
         Vec3.subtract(this.shootDirection, this.bow!.worldPosition, arrowStartPos);
         this.shootDirection.normalize();
 
-        let tmp = v3()
+        let forward = v3()
 
-        for (let i = 0; i < this.bulletCount; i++) {
-
-            //const arrow = instantiate(this.arrow!) as Node;
+        for (let i = 0; i < this.bulletCount; i++) {            
             const arrow = this.projectilePool?.alloc()!;
-            arrow.active = true
-            arrow.forward = this.node.forward.clone();
+            arrow.active = true            
+            arrow.on(Events.onProjectileDead, this.onProjectileDead, this);           
 
-            MathUtil.rotateAround(tmp, arrow.forward, Vec3.UP, this._splitAngle[i]);
-            arrow.forward = tmp;
+            MathUtil.rotateAround(forward, this.node.forward, Vec3.UP, this._splitAngle[i]);
+            arrow.forward = forward;
 
             arrow.worldPosition = arrowStartPos;
             if (!arrow.parent)
@@ -127,19 +136,18 @@ export class PlayerController extends Actor {
                 throw new Error("missing component: Projectile");
             }
             projectile.host = this.node;
-            projectile.projectProperty = new ProjectileProperty();
-            projectile.projectProperty.penetration = this._penetration;
-            projectile.pool = this.projectilePool;
+
+            let property = new ProjectileProperty();
+            property.penetration = this._penetration;            
             const willChase = randomRange(0, 100) < this._chaseRate;
             if (willChase) {
                 projectile.target = this.getEnemy();
-                projectile.projectProperty.chase = willChase && projectile.target != null;
+                property.chase = willChase && projectile.target != null;
             }
-            projectile?.fire(this.node.forward);
+            projectile.projectProperty =property;
 
+            projectile?.fire();            
         }
-
-        //AudioManager.inst.playSfx(AudioDefine.SFX_SHOOT);
     }
 
     set bulletCount(count: number) {
@@ -175,7 +183,7 @@ export class PlayerController extends Actor {
 
     onKilled(actor: Actor) {
         this.exp++;
-        this.node.emit("onExpGain");
+        this.node.emit(Events.onExpGain);
 
         if (this.exp >= this.maxExp) {
             this.exp -= this.maxExp;
@@ -187,11 +195,7 @@ export class PlayerController extends Actor {
     }
 
     onUpgradeLevel() {
-        this.node.emit("onPlayerUpgrade");
-    }
-
-    onDie() {
-        super.onDie();
+        this.node.emit(Events.onPlayerUpgrade);
     }
 
     set penetraion(val: number) {
@@ -199,13 +203,19 @@ export class PlayerController extends Actor {
     }
 
     getEnemy(): Node | null {
-        let enemies = Map.inst?.enemies;
+        let enemies = GameMain.Level?.enemies;
         if (!enemies || enemies?.length == 0) {
             return null;
         }
 
-        let rand = randomRangeInt(0, enemies.length);        
+        let rand = randomRangeInt(0, enemies.length);
         return enemies[rand];
+    }
+
+    onProjectileDead(node:Node){
+        node.off(Events.onProjectileDead, this.onProjectileDead, this);
+        this.projectilePool.free(node);
+        node.active = false;
     }
 }
 

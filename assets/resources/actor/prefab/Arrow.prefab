@@ -265,7 +265,10 @@
     "__prefab": {
       "__id__": 17
     },
-    "_material": null,
+    "_material": {
+      "__uuid__": "ba21476f-2866-4f81-9c4d-6e359316e448",
+      "__expectedType__": "cc.PhysicsMaterial"
+    },
     "_isTrigger": true,
     "_center": {
       "__type__": "cc.Vec3",
@@ -333,19 +336,10 @@
     "__prefab": {
       "__id__": 21
     },
-    "speedFactor": 3,
-    "rigidbody": {
-      "__id__": 18
-    },
-    "angularSpeed": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 360,
-      "z": 0
-    },
     "collider": {
       "__id__": 16
     },
+    "linearSpeed": 3,
     "_id": ""
   },
   {

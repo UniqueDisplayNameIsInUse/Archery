@@ -1,26 +1,20 @@
-import { Collider, ICollisionEvent, log, math, Node, Pool, Quat, quat, RigidBody, v3, Vec3, _decorator } from 'cc';
-import { EffectManager } from '../effect/EffectManager';
+import { CCFloat, Collider, Component, ICollisionEvent, math, Node, Pool, v3, Vec3, _decorator } from 'cc';
+import { Events } from '../events/Events';
+import { GameMain } from '../GameMain';
 import { MathUtil } from '../util/MathUtil';
-import { Movable } from './Movable';
 import { PhysicsGroup } from './PhysicsGroup';
 import { ProjectileProperty } from './ProjectileProperty';
 const { ccclass, property } = _decorator;
 
 @ccclass('Projectile')
-export class Projectile extends Movable {
+export class Projectile extends Component {
 
     @property(Collider)
     collider: Collider | null = null;
 
-    duration: number = 3.0;
-
     startTime: number = 0;
 
-    initialDirection: Vec3 = v3();
-
-    isFire: boolean = false;
-
-    rigidbody: RigidBody | null = null;
+    isFired: boolean = false;
 
     position: Vec3 = v3()
 
@@ -32,33 +26,37 @@ export class Projectile extends Movable {
 
     pool: Pool<Node> | null = null;
 
-    start() {
-        this.collider?.on("onTriggerEnter", this.onTriggerEnter, this);
-        this.rigidbody = this.node.getComponent(RigidBody);
+    forward : Vec3 = v3()
+
+    angularSpeed : Vec3 = v3();
+
+    @property(CCFloat)
+    linearSpeed : number = .0;
+
+    start() {                
+        this.collider?.on("onTriggerEnter", this.onTriggerEnter, this);        
     }
 
     onDestroy() {
         this.collider.off("onTriggerEnter", this.onTriggerEnter, this);
     }
 
-    fire(dir: Vec3) {
-        this.initialDirection = dir.clone()
-        this.isFire = true;
+    fire() {
+        this.isFired = true;
         this.startTime = 0;
     }
 
     update(deltaTime: number) {
 
         this.startTime += deltaTime;
-        if (this.startTime >= this.projectProperty!.duration) {
-            this.removeProjectile()
+        if (this.startTime >= this.projectProperty!.liftTime) {
+            this.node.emit(Events.onProjectileDead, this.node);
         }
 
         if (this.projectProperty?.chase) {
             Vec3.subtract(this.forward, this.target!.worldPosition, this.node.worldPosition);
             this.forward.y = 0;
-            this.forward.normalize();
-            const dot = Vec3.dot(this.forward, this.node.forward);
+            this.forward.normalize();            
             let maxAngle = this.angularSpeed.y * deltaTime;
 
             let v = v3()
@@ -66,7 +64,7 @@ export class Projectile extends Movable {
             this.node.forward = v;
         }
 
-        Vec3.scaleAndAdd(this.position, this.node.worldPosition, this.node.forward, this.speedFactor * deltaTime);
+        Vec3.scaleAndAdd(this.position, this.node.worldPosition, this.node.forward, this.linearSpeed * deltaTime);
         this.node.worldPosition = this.position;
     }
 
@@ -74,15 +72,10 @@ export class Projectile extends Movable {
         if (event.otherCollider.getGroup() == PhysicsGroup.ENEMY) {
             this.projectProperty!.penetration--;
             if (this.projectProperty!.penetration <= 0) {
-                this.removeProjectile()
+                this.node.emit(Events.onProjectileDead, this.node)
             }
-            EffectManager.inst?.playExplore(event.selfCollider.node.worldPosition);
+            GameMain.EffectManager?.playExplore(event.selfCollider.node.worldPosition);
         }
-    }
-
-    removeProjectile() {
-        this.node.active = false;        
-        this.pool?.free(this.node);
-    }
+    }    
 }
 

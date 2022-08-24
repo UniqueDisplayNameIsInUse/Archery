@@ -1,17 +1,12 @@
-import { _decorator, Component, instantiate, BoxCollider, Rect, v2, Prefab, CCInteger, Vec3, Scene, macro, v3, math, log, director, size, Size, Node, Pool, RigidBody, randomRange } from 'cc';
-import { Actor } from '../actor/Actor';
+import { _decorator, Component, instantiate, BoxCollider, Rect, v2, Prefab, Vec3, macro, v3, math, director, Size, Node, RigidBody, randomRange } from 'cc';
 import { EnemyController } from '../actor/EnemyController';
+import { Events } from '../events/Events';
+import { GameMain } from '../GameMain';
 import { Pools } from '../util/Pools';
 const { ccclass, property } = _decorator;
 
-@ccclass('Map')
-export class Map extends Component {
-
-    private static _inst: Map | null = null
-
-    static get inst(): Map | null {
-        return this._inst;
-    }
+@ccclass('Level')
+export class Level extends Component {
 
     @property(BoxCollider)
     spawnCollider: BoxCollider | null = null;
@@ -31,10 +26,10 @@ export class Map extends Component {
 
     maxAlive: number = 100;
 
-    enemyPools: Pools<number> = new Pools()
+    enemyPools: Pools<number, Node> = new Pools()
 
     start() {
-        Map._inst = this;
+        GameMain.Level = this;
 
         const wp = this.spawnCollider!.node.worldPosition;
         const size = this.spawnCollider?.size;
@@ -55,11 +50,13 @@ export class Map extends Component {
     }
 
     onDestroy() {
+        GameMain.Level = null;
+
         this.enemyPools.destroyAll()
         this.enemyPools = null;
     }
 
-    randomSpawn() {      
+    randomSpawn() {
         this.spawnPos.x = math.randomRange(this.spawnRect.xMin, this.spawnRect.xMax);
         this.spawnPos.z = math.randomRange(this.spawnRect.yMin, this.spawnRect.yMax);
         this.doSpawn(this.spawnPos)
@@ -68,12 +65,13 @@ export class Map extends Component {
     nameCounter: number = 0;
 
     doSpawn(spawnPoint: Vec3) {
+
         const prefab = this.enemyPrefabs[this.enemyIndex];
         const enemy = instantiate(prefab);
         this.enemies.push(enemy);
 
         enemy.name = "Enemy" + this.nameCounter++;
-        enemy.on("onDead", this.onEnemyDead, this);
+        enemy.on(Events.onDead, this.onEnemyDead, this);
         enemy.setPosition(spawnPoint);
 
         director.getScene()?.addChild(enemy);
@@ -83,11 +81,11 @@ export class Map extends Component {
 
         let rigid = enemy.getComponent(RigidBody)!;
         rigid.mass = randomRange(0.3, 2.0);
-
+        
         enemy.scale = v3(rigid.mass, rigid.mass, rigid.mass);
     }
 
-    onEnemyDead(actor: EnemyController) {        
+    onEnemyDead(actor: EnemyController) {
         let i = this.enemies.indexOf(actor.node);
         if (i < 0) {
             throw new Error('actor not found')
