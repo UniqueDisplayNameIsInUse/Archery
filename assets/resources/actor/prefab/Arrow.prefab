@@ -40,7 +40,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 1.721,
+      "y": 0,
       "z": 2.005
     },
     "_lrot": {
@@ -339,6 +339,7 @@
     "collider": {
       "__id__": 16
     },
+    "angularSpeed": 180,
     "linearSpeed": 3,
     "_id": ""
   },

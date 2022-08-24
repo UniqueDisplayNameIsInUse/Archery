@@ -109,7 +109,7 @@ export class EnemyController extends Actor {
             hurtDirection.normalize();
             this.hurt(hostActor!.damange, hostActor!, hurtDirection);
 
-            AudioManager.inst.playSfx(AudioDefine.SFX_HIT);
+            //AudioManager.inst.playSfx(AudioDefine.SFX_HIT);
         }
     }
 

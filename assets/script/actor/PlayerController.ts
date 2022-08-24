@@ -44,17 +44,16 @@ export class PlayerController extends Component {
 
     actor: Actor | null = null;
 
-    onLoad(){
+    onLoad() {
         GameMain.PlayerController = this;
     }
 
-    start() {        
+    start() {
         this.actor = this.node.getComponent(Actor);
         this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);
         this.node.on(Events.onKilled, this.onKilled, this);
-        this.actor.onStateChanged = this.onStateChanged;
 
-        this.bulletCount = 10;
+        this.bulletCount = 3;
 
         this.projectilePool = new Pool<Node>(
             (): Node => {
@@ -85,13 +84,23 @@ export class PlayerController extends Component {
 
         const len = this.handleInput();
         if (len > 0) {
-            this.actor.changeState(StateDefine.Run);            
-        } else if (this.actor.currState != StateDefine.Attack) {
-            this.actor.changeState(StateDefine.Idle);
+            this.actor.changeState(StateDefine.Run);
+        } else {
+            // 查找面前是否有怪物
+            let enemy = this.getEnemy()
+            if (enemy) {
+                Vec3.subtract(this.actor.forward, enemy.worldPosition, this.node.worldPosition);
+                this.actor.forward.normalize()
+
+                // 如果有射击
+                this.actor?.changeState(StateDefine.Attack)
+            } else {
+                this.actor.changeState(StateDefine.Idle);
+            }
         }
     }
 
-    handleInput(): number {    
+    handleInput(): number {
         let x = VirtualInput.horizontal;
         let y = VirtualInput.vertical;
 
@@ -102,15 +111,6 @@ export class PlayerController extends Component {
         return this.actor.forward.length();
     }
 
-    onStateChanged(actor:Actor, state: StateDefine) {
-        if (state == StateDefine.Idle) {
-            //1. 查找面前是否有怪物
-
-            //2. 如果有射击
-            //actor?.changeState(StateDefine.Attack)
-        }
-    }
-
     onFrameAttackLoose() {
 
         const arrowStartPos = this.bowstring!.worldPosition;
@@ -119,10 +119,10 @@ export class PlayerController extends Component {
 
         let forward = v3()
 
-        for (let i = 0; i < this.bulletCount; i++) {            
+        for (let i = 0; i < this.bulletCount; i++) {
             const arrow = this.projectilePool?.alloc()!;
-            arrow.active = true            
-            arrow.on(Events.onProjectileDead, this.onProjectileDead, this);           
+            arrow.active = true
+            arrow.on(Events.onProjectileDead, this.onProjectileDead, this);
 
             MathUtil.rotateAround(forward, this.node.forward, Vec3.UP, this._splitAngle[i]);
             arrow.forward = forward;
@@ -138,15 +138,15 @@ export class PlayerController extends Component {
             projectile.host = this.node;
 
             let property = new ProjectileProperty();
-            property.penetration = this._penetration;            
+            property.penetration = this._penetration;
             const willChase = randomRange(0, 100) < this._chaseRate;
             if (willChase) {
                 projectile.target = this.getEnemy();
                 property.chase = willChase && projectile.target != null;
             }
-            projectile.projectProperty =property;
+            projectile.projectProperty = property;
 
-            projectile?.fire();            
+            projectile?.fire();
         }
     }
 
@@ -207,12 +207,22 @@ export class PlayerController extends Component {
         if (!enemies || enemies?.length == 0) {
             return null;
         }
+        
+        let nearDistance = 99999;
+        let nearastEnemy : Node | null = null;
+        for(let enemy of enemies){
+            const distance = Vec3.distance(this.node.worldPosition, enemy.worldPosition);
+            if( distance < nearDistance){
+                nearDistance = distance;
+                nearastEnemy = enemy;
+            }
+        }
 
-        let rand = randomRangeInt(0, enemies.length);
-        return enemies[rand];
+        if(nearastEnemy)
+            return nearastEnemy;
     }
 
-    onProjectileDead(node:Node){
+    onProjectileDead(node: Node) {
         node.off(Events.onProjectileDead, this.onProjectileDead, this);
         this.projectilePool.free(node);
         node.active = false;

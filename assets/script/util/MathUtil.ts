@@ -33,6 +33,13 @@ export class MathUtil {
         let up = v3()
         Vec3.cross(up, src, dest);
         this.rotateAround(out, src, up, maxAngleDelta);
-    }    
+    }
+
+    static signAngle(from: Vec3, to: Vec3, axis: Vec3): number {
+        const num1 = Vec3.angle(from, to);        
+        Vec3.cross(tempVec, from, to);
+        const num5 = Math.sign((axis.x * tempVec.x + axis.y * tempVec.y + axis.z * tempVec.z));
+        return num1 * num5;
+    }
 }
 

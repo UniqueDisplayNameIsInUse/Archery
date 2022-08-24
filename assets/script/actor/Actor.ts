@@ -32,9 +32,7 @@ export class Actor extends Component {
 
     get dead(): boolean {
         return this.currState == StateDefine.Die;
-    }
-
-    onStateChanged: (actor: Actor, state: StateDefine) => void;
+    }    
 
     start() {
         this.rigidbody = this.node.getComponent(RigidBody);
@@ -51,9 +49,17 @@ export class Actor extends Component {
             return;
         }
 
+        // let f = v3();
+        // MathUtil.rotateToward(f, this.node.forward, this.forward, math.toRadian(this.angularSpeed) * deltaTime);                
+        // this.node.forward = f;
+
+        let a = MathUtil.signAngle(this.node.forward, this.forward, Vec3.UP);
+        let as = v3(0, a*10, 0);
+        this.rigidbody.setAngularVelocity(as);
+
         switch (this.currState) {
             case StateDefine.Run:
-                this.doMove(deltaTime);
+                this.doMove();
                 this.changeState(StateDefine.Run);
                 break;
             case StateDefine.Idle:
@@ -61,11 +67,7 @@ export class Actor extends Component {
         }
     }
 
-    doMove(deltaTime: number) {
-        let f = v3();
-        MathUtil.rotateToward(f, this.node.forward, this.forward, math.toRadian(this.angularSpeed) * deltaTime);                
-        this.node.forward = f;
-        
+    doMove() {               
         let speed = this.linearSpeed * this.forward.length();
         tempVelocity.x = math.clamp(this.node.forward.x, -1, 1) * speed;
         tempVelocity.z = math.clamp(this.node.forward.z, -1, 1) * speed;
@@ -91,11 +93,7 @@ export class Actor extends Component {
         }
 
         this.skeletalAnimation?.crossFade(state as string, 0.1);
-        this.currState = state;
-        let stateChangedCallback = this.onStateChanged;
-        if (stateChangedCallback) {
-            stateChangedCallback(this, this.currState);
-        }
+        this.currState = state;        
     }
 
     onAnimationFinished(eventType: Animation.EventType, state: SkeletalAnimationState) {

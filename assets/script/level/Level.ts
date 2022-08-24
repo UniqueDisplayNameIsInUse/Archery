@@ -35,18 +35,10 @@ export class Level extends Component {
         const size = this.spawnCollider?.size;
         this.spawnRect.size = new Size(size!.x, size!.z);
         this.spawnRect.center = v2(wp.x, wp.z);
-
+        
         this.schedule(() => {
             this.randomSpawn()
-        }, 0.1, 20)
-
-        this.schedule(() => {
-            this.randomSpawn()
-        }, 1.0, macro.REPEAT_FOREVER)
-
-        this.schedule(() => {
-            this.hp *= 1.2
-        }, 10, macro.REPEAT_FOREVER)
+        }, 1.0, macro.REPEAT_FOREVER, 3)
     }
 
     onDestroy() {

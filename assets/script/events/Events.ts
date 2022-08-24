@@ -17,6 +17,8 @@ export class Events {
 
     static onPlayerUpgrade: string = "onPlayerUpgrade";
 
+    static onPlayerStateChanged : string = "onPlayerStateChanged";
+
     static onBgmVolumeChanged: string = "onBgmVolumeChanged";
 
 }

@@ -28,10 +28,5 @@ export class UISkillUpgrade extends Component {
         GameMain.PlayerController!.chaseRate += 10;        
         this.node.active = false;
     }
-
-    onClose(){        
-        UIUtil.closePanel(this.node.name, false);
-    }
-    
 }
 

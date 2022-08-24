@@ -385,8 +385,8 @@
       "__id__": 26
     },
     "skeletalAnimation": null,
-    "linearSpeed": 0.8,
-    "angularSpeed": 90,
+    "linearSpeed": 0.5,
+    "angularSpeed": 180,
     "attackRange": 0.5,
     "_id": ""
   },

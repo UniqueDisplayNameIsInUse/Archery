@@ -1,4 +1,4 @@
-import { _decorator, resources, Prefab, instantiate, log, find, Node } from 'cc';
+import { _decorator, resources, Prefab, instantiate, log, find, Node, tween } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -6,20 +6,16 @@ const { ccclass, property } = _decorator;
  */
 export class UIUtil {
 
-    static uiRoot: Node | null = null;
-
     static openPanel(name: string, bringToTop: boolean = true) {
         log("open panel, name:", name, ", bringToTop:", bringToTop);
 
-        if (this.uiRoot == null) {
-            this.uiRoot = find("UIRoot");
-        }
+        let uiRoot = find("UIRoot");
 
-        let panel = this.uiRoot.getChildByName(name);
+        let panel = uiRoot.getChildByName(name);
         if (panel != null) {
             panel.active = true;
             if (bringToTop) {
-                panel.setSiblingIndex(this.uiRoot.children.length - 1);
+                panel.setSiblingIndex(uiRoot.children.length - 1);
             }
             return;
         }
@@ -31,13 +27,16 @@ export class UIUtil {
             }
 
             let node = instantiate(data);
-            this.uiRoot.addChild(node);
+            uiRoot.addChild(node);
         });
 
     }
 
     static closePanel(name: string, destory: boolean) {
-        let panel = this.uiRoot.getChildByName(name);
+
+        let uiRoot = find("UIRoot");
+
+        let panel = uiRoot.getChildByName(name);
         if (panel != null) {
             if (destory) {
                 panel.removeFromParent();

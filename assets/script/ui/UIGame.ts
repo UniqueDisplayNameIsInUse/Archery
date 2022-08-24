@@ -42,14 +42,16 @@ export class UIGame extends Component {
         director.loadScene("startup")
     }
 
-    onPauseGame() {
-        console.log("onPauseGame")
+    onPauseGame() {        
+        if(director.isPaused()){
+            director.resume();
+        }else{
+            director.pause();
+        }
     }
 
     onOpenSetting() {        
-        //GameMain.UIManager.openPanel("UISetting")
-
-        UIUtil.openPanel("UISkillUpgrade");
+        UIUtil.openPanel("UISetting");
     }
 
     onUpgrade() {

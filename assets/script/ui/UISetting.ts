@@ -1,4 +1,4 @@
-import { _decorator, Component, Slider, math, ProgressBar, Button, Node } from 'cc';
+import { _decorator, Component, Slider, math, ProgressBar, Button, Node, director } from 'cc';
 import { GameMain } from '../GameMain';
 import { UIUtil } from './UIUtil';
 const { ccclass, property } = _decorator;

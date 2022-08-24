@@ -28,7 +28,8 @@ export class Projectile extends Component {
 
     forward : Vec3 = v3()
 
-    angularSpeed : Vec3 = v3();
+    @property(CCFloat)
+    angularSpeed : number = 180;
 
     @property(CCFloat)
     linearSpeed : number = .0;
@@ -57,7 +58,7 @@ export class Projectile extends Component {
             Vec3.subtract(this.forward, this.target!.worldPosition, this.node.worldPosition);
             this.forward.y = 0;
             this.forward.normalize();            
-            let maxAngle = this.angularSpeed.y * deltaTime;
+            let maxAngle = this.angularSpeed * deltaTime;
 
             let v = v3()
             MathUtil.rotateToward(v, this.node.forward, this.forward, math.toRadian(maxAngle))            

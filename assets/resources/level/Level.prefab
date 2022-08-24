@@ -31,11 +31,11 @@
         "__id__": 24
       },
       {
-        "__id__": 27
+        "__id__": 26
       }
     ],
     "_prefab": {
-      "__id__": 29
+      "__id__": 28
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -575,58 +575,6 @@
     "fileId": "6365/t0PpPPq0t3ATk1KmK"
   },
   {
-    "__type__": "cc.MeshRenderer",
-    "_name": "Plane<ModelComponent>",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 25
-    },
-    "_materials": [
-      {
-        "__uuid__": "d3c7820c-2a98-4429-8bc7-b8453bc9ac41",
-        "__expectedType__": "cc.Material"
-      }
-    ],
-    "_visFlags": 0,
-    "lightmapSettings": {
-      "__id__": 26
-    },
-    "_mesh": {
-      "__uuid__": "1263d74c-8167-4928-91a6-4e2672411f47@2e76e",
-      "__expectedType__": "cc.Mesh"
-    },
-    "_shadowCastingMode": 0,
-    "_shadowReceivingMode": 1,
-    "_shadowBias": 0,
-    "_shadowNormalBias": 0,
-    "_enableMorph": true,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "c1ruLdY9pPjKW85K3GXF8K"
-  },
-  {
-    "__type__": "cc.ModelLightmapSettings",
-    "texture": null,
-    "uvParam": {
-      "__type__": "cc.Vec4",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 0
-    },
-    "_bakeable": false,
-    "_castShadow": false,
-    "_receiveShadow": true,
-    "_recieveShadow": true,
-    "_lightmapSize": 64
-  },
-  {
     "__type__": "cc.BoxCollider",
     "_name": "",
     "_objFlags": 0,
@@ -635,7 +583,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 28
+      "__id__": 25
     },
     "_material": {
       "__uuid__": "ba21476f-2866-4f81-9c4d-6e359316e448",
@@ -659,6 +607,32 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "08R/QW5FBJdpRVlRHObdMj"
+  },
+  {
+    "__type__": "7b1eeT+QbtCLaYVJWPeAOmh",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 27
+    },
+    "spawnCollider": {
+      "__id__": 21
+    },
+    "enemyPrefabs": [
+      {
+        "__uuid__": "b75f5809-6120-4460-a7f9-b93f064599c1",
+        "__expectedType__": "cc.Prefab"
+      }
+    ],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "09G2dcyTdL+67CPGVc+68c"
   },
   {
     "__type__": "cc.PrefabInfo",
