@@ -1,6 +1,5 @@
 import { _decorator, Component, director } from 'cc';
-import { GameMain } from '../GameMain';
-import { UIUtil } from './UIUtil';
+import { PlayerController } from '../actor/PlayerController';
 const { ccclass, property } = _decorator;
 
 @ccclass('UISkillUpgrade')
@@ -15,17 +14,17 @@ export class UISkillUpgrade extends Component {
     }
 
     onUpgradePenetration(){
-        GameMain.PlayerController!.penetraion += 10;        
+        PlayerController.instance!.penetraion += 10;        
         this.node.active = false;
     }
 
     onUpgradeProjectileCount(){
-        GameMain.PlayerController!.bulletCount++;
+        PlayerController.instance!.projectileCount++;
         this.node.active = false;
     }
 
     onUpgradeChaseRate(){
-        GameMain.PlayerController!.chaseRate += 10;        
+        PlayerController.instance!.chaseRate += 10;        
         this.node.active = false;
     }
 }

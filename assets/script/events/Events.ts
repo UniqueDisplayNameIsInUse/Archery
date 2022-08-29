@@ -7,18 +7,34 @@ const { ccclass, property } = _decorator;
 @ccclass('Events')
 export class Events {
 
+    /**
+     * Actor 死亡事件
+     */
     static onDead: string = "onDead";
 
-    static onKilled: string = "onKilled";
+    /**
+     * 杀死怪物
+     */
+    static onEnemyKilled: string = "onKilled";
 
+    /**
+     * 投射物销毁
+     */
     static onProjectileDead : string = "onProjectileDead";
 
+    /**
+     * 玩家获取经验值
+     */
     static onExpGain: string = "onExpGain";
 
+    /**
+     * 玩家升级
+     */
     static onPlayerUpgrade: string = "onPlayerUpgrade";
 
-    static onPlayerStateChanged : string = "onPlayerStateChanged";
-
+    /**
+     * 设置面板的背景音乐音量变化
+     */
     static onBgmVolumeChanged: string = "onBgmVolumeChanged";
 
 }

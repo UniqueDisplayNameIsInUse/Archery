@@ -3,11 +3,19 @@ import { _decorator, IVec3Like, Vec3, v3, math } from 'cc';
 let tempVec: Vec3 = v3()
 let tempVec2: Vec3 = v3()
 let tempVec3: Vec3 = v3()
+let up = v3()
 
 export class MathUtil {
 
-    // Rodrigues’ Rotation Formula
-    static rotateAround<T extends IVec3Like>(out: T, v: T, u: T, maxAngleDelta: number) {
+    /**
+     * Rodrigues’ Rotation Formula
+     * 使 v 绕 u 轴旋转 maxAngleDelta （弧度）
+     * @param out 
+     * @param v 
+     * @param u 
+     * @param maxAngleDelta 
+     */
+    static rotateAround(out: Vec3, v: Vec3, u: Vec3, maxAngleDelta: number) {
 
         //out = v*cos + uxv*sin  + (u*v)*u*(1- cos);
         const cos = Math.cos(maxAngleDelta);
@@ -29,17 +37,30 @@ export class MathUtil {
 
     }
 
-    static rotateToward(out: Vec3, src: Vec3, dest: Vec3, maxAngleDelta: number) {
-        let up = v3()
-        Vec3.cross(up, src, dest);
-        this.rotateAround(out, src, up, maxAngleDelta);
+    /**
+     * 将 from 向 to 旋转 maxAngleDelta 弧度
+     * @param out 
+     * @param from 
+     * @param to 
+     * @param maxAngleDelta 
+     */
+    static rotateToward(out: Vec3, from: Vec3, to: Vec3, maxAngleDelta: number) {
+        Vec3.cross(up, from, to);
+        this.rotateAround(out, from, up, maxAngleDelta);
     }
 
+    /**
+     * 求两个向量间的夹角（带符号）
+     * @param from 
+     * @param to 
+     * @param axis 
+     * @returns 
+     */
     static signAngle(from: Vec3, to: Vec3, axis: Vec3): number {
-        const num1 = Vec3.angle(from, to);        
+        const angle = Vec3.angle(from, to);
         Vec3.cross(tempVec, from, to);
-        const num5 = Math.sign((axis.x * tempVec.x + axis.y * tempVec.y + axis.z * tempVec.z));
-        return num1 * num5;
+        const sign = Math.sign(axis.x * tempVec.x + axis.y * tempVec.y + axis.z * tempVec.z);
+        return angle * sign;
     }
 }
 

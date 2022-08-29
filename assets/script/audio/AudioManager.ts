@@ -1,6 +1,6 @@
 import { _decorator, Component, Node, Prefab, AudioSource, resources, instantiate, director } from 'cc';
+import { Config } from '../config/Config';
 import { Events } from '../events/Events';
-import { GameMain } from '../GameMain';
 import { Pools } from '../util/Pools';
 const { ccclass, property } = _decorator;
 
@@ -9,10 +9,16 @@ export const AudioDefine = {
     SFX_SHOOT: "SfxShoot"
 }
 
+/**
+ * 音效管理器
+ */
 @ccclass('AudioManager')
 export class AudioManager extends Component {
 
-    static inst: AudioManager;
+    static _instance: AudioManager;
+    static get instance(): AudioManager {
+        return this._instance;
+    }
 
     audioPools: Pools<string, Node> = new Pools();
 
@@ -21,34 +27,33 @@ export class AudioManager extends Component {
     bgmPath: string = '';
     bgm: AudioSource | null = null;
 
-    prefabs : Map<string,Prefab> = new Map()
+    prefabs: Map<string, Prefab> = new Map()
 
     start() {
-        AudioManager.inst = this;
+        AudioManager._instance = this;        
         this.createPools()
-        GameMain.Config.on(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
+        Config.instance.on(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
     }
 
     onDestroy() {
-        AudioManager.inst = null;
+        AudioManager._instance = null;
         this.audioPools.destroyAll()
         this.audioPools = null;
-
-        GameMain.Config.off(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
+        Config.instance.off(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
     }
 
     playBgm(path: string) {
         if (!this.audioLoaded) return;
-        if(this.bgm){
+        if (this.bgm) {
             this.bgm.stop()
             this.audioPools.free(this.bgmPath, this.bgm.node);
-        }        
+        }
         let node = this.audioPools.allocc(path);
         node.active = true;
         let as = node.getComponent(AudioSource);
-        as.volume = GameMain.Config.bgmVolume;                
+        as.volume = Config.instance.bgmVolume;
         this.bgm = as;
-        this.bgmPath =  path;
+        this.bgmPath = path;
     }
 
     playSfx(path: string) {
@@ -56,9 +61,9 @@ export class AudioManager extends Component {
         let node = this.audioPools.allocc(path);
         node.active = true;
         let as = node.getComponent(AudioSource);
-        as.volume = GameMain.Config.sfxVolume;
+        as.volume = Config.instance.sfxVolume;
         as.stop();
-        as.play();        
+        as.play();
         this.schedule(() => {
             node.active = false;
             this.audioPools.free(path, node);
@@ -88,7 +93,7 @@ export class AudioManager extends Component {
 
     onBgmVolumeChanged() {
         if (this.bgm) {
-            this.bgm.volume = GameMain.Config.bgmVolume;
+            this.bgm.volume = Config.instance.bgmVolume;
         }
     }
 }

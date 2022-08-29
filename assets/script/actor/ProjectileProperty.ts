@@ -1,5 +1,4 @@
-import { _decorator, Component, Node, Quat } from 'cc';
-import { PhysicsGroup } from './PhysicsGroup';
+import { _decorator } from 'cc';
 
 export class ProjectileProperty {
 

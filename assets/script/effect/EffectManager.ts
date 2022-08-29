@@ -1,9 +1,13 @@
-import { _decorator, Component, Node, resources, Prefab, Vec3, Pool, instantiate, director, ParticleSystem, Scene, TERRAIN_NORTH_INDEX } from 'cc';
-import { GameMain } from '../GameMain';
+import { _decorator, Component, Node, Prefab, Vec3, Pool, instantiate, director, ParticleSystem } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('EffectManager')
 export class EffectManager extends Component {
+
+    static _instance: EffectManager;
+    static get instance() {
+        return this._instance;
+    }
 
     @property(Prefab)
     explorePrefab: Prefab | null = null;
@@ -16,7 +20,7 @@ export class EffectManager extends Component {
     diePool: Pool<Node> | null = null;
 
     start() {
-        GameMain.EffectManager = this;
+        EffectManager._instance = this;
 
         this.explorePool = new Pool((): Node => {
             return instantiate(this.explorePrefab!)
@@ -33,8 +37,14 @@ export class EffectManager extends Component {
         })
     }
 
-    onDestroy(){
-        GameMain.EffectManager = null;
+    onDestroy() {
+        EffectManager._instance = null;
+
+        this.explorePool.destroy();
+        this.explorePool = null;
+
+        this.diePool.destroy();
+        this.diePool = null;
     }
 
     playExplore(worldPosition: Vec3) {
@@ -47,12 +57,12 @@ export class EffectManager extends Component {
 
     play(pool: Pool<Node>, worldPosition: Vec3) {
         let node = pool.alloc()
-        
+
         director.getScene()?.addChild(node);
         node.worldPosition = worldPosition;
         node.active = true;
 
-        let ps = node.getComponent(ParticleSystem);        
+        let ps = node.getComponent(ParticleSystem);
         this.scheduleOnce(() => {
             node.removeFromParent()
             node.parent = null;

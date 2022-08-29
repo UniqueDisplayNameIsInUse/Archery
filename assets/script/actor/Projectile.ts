@@ -1,22 +1,24 @@
-import { CCFloat, Collider, Component, ICollisionEvent, math, Node, Pool, v3, Vec3, _decorator } from 'cc';
+import { CCFloat, Collider, Component, ICollisionEvent, math, Node, ParticleSystem, v3, Vec3, _decorator } from 'cc';
+import { EffectManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
-import { GameMain } from '../GameMain';
 import { MathUtil } from '../util/MathUtil';
-import { PhysicsGroup } from './PhysicsGroup';
 import { ProjectileProperty } from './ProjectileProperty';
 const { ccclass, property } = _decorator;
 
+let temp = v3();
+
+/**
+ * 投射物
+ */
 @ccclass('Projectile')
 export class Projectile extends Component {
 
     @property(Collider)
-    collider: Collider | null = null;
+    private collider: Collider | null = null;
 
-    startTime: number = 0;
+    private startTime: number = 0;
 
-    isFired: boolean = false;
-
-    position: Vec3 = v3()
+    private position: Vec3 = v3()
 
     projectProperty: ProjectileProperty | null = null;
 
@@ -24,18 +26,25 @@ export class Projectile extends Component {
 
     target: Node | null = null;
 
-    pool: Pool<Node> | null = null;
-
-    forward : Vec3 = v3()
+    private forward: Vec3 = v3()
 
     @property(CCFloat)
-    angularSpeed : number = 180;
+    private angularSpeed: number = 180;
 
     @property(CCFloat)
-    linearSpeed : number = .0;
+    private linearSpeed: number = 0.0;
 
-    start() {                
-        this.collider?.on("onTriggerEnter", this.onTriggerEnter, this);        
+    particleSystems: ParticleSystem[] = [];
+
+    start() {
+        this.collider?.on("onTriggerEnter", this.onTriggerEnter, this);
+        this.particleSystems = this.node.getComponentsInChildren(ParticleSystem);
+    }
+
+    onDisable() {
+        for (let particleSystem of this.particleSystems) {
+            particleSystem.stop();
+        }
     }
 
     onDestroy() {
@@ -43,26 +52,26 @@ export class Projectile extends Component {
     }
 
     fire() {
-        this.isFired = true;
         this.startTime = 0;
+        for (let particleSystem of this.particleSystems) {                        
+            particleSystem.play();
+        }
     }
 
     update(deltaTime: number) {
-
         this.startTime += deltaTime;
         if (this.startTime >= this.projectProperty!.liftTime) {
-            this.node.emit(Events.onProjectileDead, this.node);
+            this.node.emit(Events.onProjectileDead, this);
         }
 
         if (this.projectProperty?.chase) {
             Vec3.subtract(this.forward, this.target!.worldPosition, this.node.worldPosition);
             this.forward.y = 0;
-            this.forward.normalize();            
+            this.forward.normalize();
             let maxAngle = this.angularSpeed * deltaTime;
 
-            let v = v3()
-            MathUtil.rotateToward(v, this.node.forward, this.forward, math.toRadian(maxAngle))            
-            this.node.forward = v;
+            MathUtil.rotateToward(temp, this.node.forward, this.forward, math.toRadian(maxAngle))
+            this.node.forward = temp;
         }
 
         Vec3.scaleAndAdd(this.position, this.node.worldPosition, this.node.forward, this.linearSpeed * deltaTime);
@@ -70,13 +79,11 @@ export class Projectile extends Component {
     }
 
     onTriggerEnter(event: ICollisionEvent) {
-        if (event.otherCollider.getGroup() == PhysicsGroup.ENEMY) {
-            this.projectProperty!.penetration--;
-            if (this.projectProperty!.penetration <= 0) {
-                this.node.emit(Events.onProjectileDead, this.node)
-            }
-            GameMain.EffectManager?.playExplore(event.selfCollider.node.worldPosition);
+        this.projectProperty!.penetration--;
+        if (this.projectProperty!.penetration <= 0) {
+            this.node.emit(Events.onProjectileDead, this)
         }
-    }    
+        EffectManager.instance?.playExplore(event.selfCollider.node.worldPosition);
+    }
 }
 

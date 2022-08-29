@@ -45,7 +45,7 @@ export class ShootTestCase extends Component {
         Vec3.subtract(this.initialDirection, this.bow!.worldPosition, this.pullOrigin!.worldPosition);
         this.initialDirection.normalize();
 
-        this.projectile?.getComponent(Projectile)?.fire(this.initialDirection);
+        this.projectile?.getComponent(Projectile)?.fire();
     }
 }
 

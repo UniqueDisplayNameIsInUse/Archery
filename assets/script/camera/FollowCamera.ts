@@ -1,8 +1,11 @@
-import { _decorator, Component, Node, Camera, Quat, Vec3, v3 } from 'cc';
+import { _decorator, Component, Node, Camera, Vec3, v3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 let tempPos : Vec3 = v3();
 
+/**
+ * 固定跟随相机
+ */
 @ccclass('FollowCamera')
 export class FollowCamera extends Component {
 

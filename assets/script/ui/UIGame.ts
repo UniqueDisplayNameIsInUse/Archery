@@ -1,7 +1,7 @@
 import { _decorator, Component, ProgressBar, Label, Button, director, resources } from 'cc';
+import { PlayerController } from '../actor/PlayerController';
 import { Events } from '../events/Events';
-import { GameMain } from '../GameMain';
-import { UIUtil } from './UIUtil';
+import { DialogDef as DialogDefine, UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIGame')
@@ -9,9 +9,6 @@ export class UIGame extends Component {
 
     @property(ProgressBar)
     expBar: ProgressBar | null = null;
-
-    @property(Label)
-    levelLabel: Label | null = null;
 
     @property(Label)
     expLabel: Label | null = null;
@@ -23,11 +20,10 @@ export class UIGame extends Component {
     btnSetting: Button | null = null;
 
     start() {
-        GameMain.PlayerController?.node.on(Events.onExpGain, this.onExpGain, this);
-        GameMain.PlayerController?.node.on(Events.onPlayerUpgrade, this.onUpgrade, this);
+        PlayerController.instance?.node.on(Events.onExpGain, this.onExpGain, this);
+        PlayerController.instance?.node.on(Events.onPlayerUpgrade, this.onUpgrade, this);
 
         this.onExpGain();
-        this.levelLabel!.string = "Level: " + GameMain.PlayerController?.level;
 
         this.btnSetting = this.node.getChildByPath("Layout/BtnSetting").getComponent(Button);
         this.btnSetting.node.on(Button.EventType.CLICK, this.onOpenSetting, this);
@@ -42,28 +38,26 @@ export class UIGame extends Component {
         director.loadScene("startup")
     }
 
-    onPauseGame() {        
-        if(director.isPaused()){
+    onPauseGame() {
+        if (director.isPaused()) {
             director.resume();
-        }else{
+        } else {
             director.pause();
         }
     }
 
-    onOpenSetting() {        
-        UIUtil.openPanel("UISetting");
+    onOpenSetting() {
+        UIManager.instance.showDialog(DialogDefine.UISetting);
     }
 
     onUpgrade() {
-        this.levelLabel!.string = "Level: " + GameMain.PlayerController?.level;
-
-        UIUtil.openPanel("UISkillUpgrade");
+        UIManager.instance.showDialog(DialogDefine.UISkillUpgrade);
     }
 
     onExpGain() {
-        if (GameMain.PlayerController) {
-            this.expBar!.progress = GameMain.PlayerController.exp / GameMain.PlayerController.maxExp;
-            this.expLabel!.string = GameMain.PlayerController.exp.toFixed() + "/" + GameMain.PlayerController.maxExp.toFixed();
+        if (PlayerController.instance) {
+            this.expBar!.progress = PlayerController.instance.exp / PlayerController.instance.maxExp;
+            this.expLabel!.string = PlayerController.instance.exp.toFixed() + "/" + PlayerController.instance.maxExp.toFixed();
         }
     }
 }

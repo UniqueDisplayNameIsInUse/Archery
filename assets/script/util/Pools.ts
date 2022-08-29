@@ -1,8 +1,12 @@
 import { _decorator, Pool } from 'cc';
 const { ccclass, property } = _decorator;
 
+/**
+ * 内存池封装
+ */
 @ccclass('Pools')
 export class Pools<TKey, TValue> {
+    
     pools: Map<TKey, Pool<TValue>> = new Map();
 
     pool(key: TKey): Pool<TValue> {

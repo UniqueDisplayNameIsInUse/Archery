@@ -1,6 +1,6 @@
-import { _decorator, Component, Slider, math, ProgressBar, Button, Node, director } from 'cc';
-import { GameMain } from '../GameMain';
-import { UIUtil } from './UIUtil';
+import { _decorator, Component, Slider, math, ProgressBar, Button, Node } from 'cc';
+import { Config } from '../config/Config';
+import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 /**
@@ -43,11 +43,11 @@ export class UISetting extends Component {
         this.sliderSfxVolume.node.on("slide", this.onSfxVolumeChanged, this);
         this.progressSfxVolume = this.sliderSfxVolume.node.getChildByName("ProgressBar").getComponent(ProgressBar);        
 
-        this.sliderBgmVolume.progress = GameMain.Config.bgmVolume;
-        this.sliderSfxVolume.progress = GameMain.Config.sfxVolume;
+        this.sliderBgmVolume.progress = Config.instance.bgmVolume;
+        this.sliderSfxVolume.progress = Config.instance.sfxVolume;
 
-        this.progressBgmVolume.progress = GameMain.Config.bgmVolume;
-        this.progressSfxVolume.progress = GameMain.Config.sfxVolume;
+        this.progressBgmVolume.progress = Config.instance.bgmVolume;
+        this.progressSfxVolume.progress = Config.instance.sfxVolume;
 
         this.btnClose = this.node.getChildByName("BtnClose");
         this.btnClose.on(Button.EventType.CLICK, this.onClose, this);
@@ -58,17 +58,17 @@ export class UISetting extends Component {
     }
 
     onBgmVolumeChanged(value: Slider) {
-        GameMain.Config.bgmVolume = math.clamp01(value.progress);
+        Config.instance.bgmVolume = math.clamp01(value.progress);
         this.progressBgmVolume.progress = value.progress;
     }    
 
     onSfxVolumeChanged(value: Slider) {
-        GameMain.Config.sfxVolume = math.clamp01(value.progress);
+        Config.instance.sfxVolume = math.clamp01(value.progress);
         this.progressSfxVolume.progress = value.progress;
     }
 
     onClose() {        
-        UIUtil.closePanel(this.node.name, false);
+        UIManager.instance.closePanel(this.node.name, false);
     }
 }
 

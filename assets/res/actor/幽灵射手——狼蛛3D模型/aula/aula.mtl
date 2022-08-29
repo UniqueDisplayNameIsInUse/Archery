@@ -9,11 +9,8 @@
   },
   "_techIdx": 0,
   "_defines": [
+    {},
     {
-      "USE_INSTANCING": true
-    },
-    {
-      "USE_INSTANCING": true,
       "USE_1ST_SHADE_MAP": true,
       "USE_2ND_SHADE_MAP": true
     },
