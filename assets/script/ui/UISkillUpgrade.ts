@@ -1,7 +1,10 @@
 import { _decorator, Component, director } from 'cc';
-import { PlayerController } from '../actor/PlayerController';
+import { ActorManager } from '../level/ActorManager';
 const { ccclass, property } = _decorator;
 
+/**
+ * 角色升级面板
+ */
 @ccclass('UISkillUpgrade')
 export class UISkillUpgrade extends Component {
 
@@ -14,17 +17,17 @@ export class UISkillUpgrade extends Component {
     }
 
     onUpgradePenetration(){
-        PlayerController.instance!.penetraion += 10;        
+        ActorManager.instance.playerController!.penetraion += 10;        
         this.node.active = false;
     }
 
     onUpgradeProjectileCount(){
-        PlayerController.instance!.projectileCount++;
+        ActorManager.instance.playerController!.projectileCount++;
         this.node.active = false;
     }
 
     onUpgradeChaseRate(){
-        PlayerController.instance!.chaseRate += 10;        
+        ActorManager.instance.playerController!.chaseRate += 10;        
         this.node.active = false;
     }
 }

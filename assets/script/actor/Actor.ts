@@ -126,7 +126,7 @@ export class Actor extends Component {
             return;
         }
         this.changeState(StateDefine.Die);
-        this.node.emit(Events.onDead, this)
+        this.node.emit(Events.onDead, this.node)
     }
 
     attack() {

@@ -1,8 +1,7 @@
-import { Animation, ccenum, CCFloat, CCInteger, Collider, Component, game, ICollisionEvent, macro, math, Node, SkeletalAnimationState, TerrainBlockLightmapInfo, v3, Vec3, _decorator } from 'cc';
-import { EffectManager } from '../effect/EffectManager';
+import { ccenum, CCFloat, CCInteger, Collider, Component, game, ICollisionEvent, macro, math, Node, v3, Vec3, _decorator } from 'cc';
+import { ActorManager } from '../level/ActorManager';
 import { Actor } from './Actor';
 import { PhysicsGroup } from './PhysicsGroup';
-import { PlayerController } from './PlayerController';
 import { Projectile } from './Projectile';
 import { ProjectileEmitter } from './ProjectileEmiiter';
 import { StateDefine } from './StateDefine';
@@ -57,7 +56,6 @@ export class EnemyController extends Component {
             this.projectileEmitter = this.node.getComponent(ProjectileEmitter);
         }
 
-        this.target = PlayerController.instance?.node.getComponent(Actor);
         this.schedule(this.executeAI, 1.0, macro.REPEAT_FOREVER, 1.0)
 
         const collider = this.node.getComponent(Collider);
@@ -65,7 +63,7 @@ export class EnemyController extends Component {
 
         this.node.on("onFrameAttack", this.onFrameAttack, this);
 
-        this.actor.skeletalAnimation?.on(Animation.EventType.FINISHED, this.onDieFinished, this);
+        this.target = ActorManager.instance.playerActor;
     }
 
     onDestroy() {
@@ -75,8 +73,6 @@ export class EnemyController extends Component {
         collider?.off("onTriggerEnter", this.onTriggerEnter, this);
 
         this.node.off("onFrameAttack", this.onFrameAttack, this);
-
-        this.actor.skeletalAnimation?.off(Animation.EventType.FINISHED, this.onDieFinished, this);
     }
 
     executeAI() {
@@ -90,7 +86,7 @@ export class EnemyController extends Component {
             return;
         }
 
-        const canAttack = game.totalTime - this.lastAttackTime >= this.attackInterval;        
+        const canAttack = game.totalTime - this.lastAttackTime >= this.attackInterval;
 
         // 目标已死或我不能攻击
         if (this.target.currState == StateDefine.Die || !canAttack) {
@@ -171,13 +167,6 @@ export class EnemyController extends Component {
             temp.normalize();
             projectile.node.forward = temp;
             projectile.fire();
-        }
-    }
-
-    onDieFinished(eventType: Animation.EventType, state: SkeletalAnimationState) {
-        if (state.name == StateDefine.Die) {
-            EffectManager.instance?.playDieEffect(this.node.worldPosition);
-            this.node.removeFromParent()
         }
     }
 }

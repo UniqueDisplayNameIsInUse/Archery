@@ -1,6 +1,6 @@
 import { _decorator, Component, ProgressBar, Label, Button, director, resources } from 'cc';
-import { PlayerController } from '../actor/PlayerController';
 import { Events } from '../events/Events';
+import { ActorManager } from '../level/ActorManager';
 import { DialogDef as DialogDefine, UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
@@ -20,8 +20,8 @@ export class UIGame extends Component {
     btnSetting: Button | null = null;
 
     start() {
-        PlayerController.instance?.node.on(Events.onExpGain, this.onExpGain, this);
-        PlayerController.instance?.node.on(Events.onPlayerUpgrade, this.onUpgrade, this);
+        ActorManager.instance.playerActor?.node.on(Events.onExpGain, this.onExpGain, this);
+        ActorManager.instance.playerActor?.node.on(Events.onPlayerUpgrade, this.onUpgrade, this);
 
         this.onExpGain();
 
@@ -55,9 +55,9 @@ export class UIGame extends Component {
     }
 
     onExpGain() {
-        if (PlayerController.instance) {
-            this.expBar!.progress = PlayerController.instance.exp / PlayerController.instance.maxExp;
-            this.expLabel!.string = PlayerController.instance.exp.toFixed() + "/" + PlayerController.instance.maxExp.toFixed();
+        if (ActorManager.instance.playerController) {
+            this.expBar!.progress = ActorManager.instance.playerController.exp / ActorManager.instance.playerController.maxExp;
+            this.expLabel!.string = ActorManager.instance.playerController.exp.toFixed() + "/" + ActorManager.instance.playerController.maxExp.toFixed();
         }
     }
 }

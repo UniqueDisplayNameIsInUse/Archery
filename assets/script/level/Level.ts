@@ -2,7 +2,9 @@ import { _decorator, Component, instantiate, BoxCollider, Rect, v2, Prefab, Vec3
 import { Actor } from '../actor/Actor';
 import { EnemyController } from '../actor/EnemyController';
 import { Events } from '../events/Events';
+import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { UIManager } from '../ui/UIManager';
+import { ActorManager } from './ActorManager';
 const { ccclass, property } = _decorator;
 
 /**
@@ -22,17 +24,6 @@ export class Level extends Component {
     @property(BoxCollider)
     spawnCollider: BoxCollider | null = null;
 
-    /**
-     * 敌人的预制体
-     */
-    @property([Prefab])
-    enemyPrefabs: Prefab[] = []
-
-    /**
-     * 随机索引
-     */
-    enemyIndex: number = 0;
-
     /** 
      * 出生范围 
     */
@@ -42,11 +33,6 @@ export class Level extends Component {
      * 本次出生的出生点
      */
     spawnPos: Vec3 = v3()
-
-    /**
-     * 场景内的敌人
-     */
-    enemies: Array<Node> = [];
 
     /**
      * 出生时的血量
@@ -66,16 +52,25 @@ export class Level extends Component {
         this.spawnRect.size = new Size(size!.x, size!.z);
         this.spawnRect.center = v2(wp.x, wp.z);
 
-        resources.loadDir("ui", () => {
-            resources.loadDir("effect", () => {
-                resources.loadDir("audio", () => {
-                    resources.loadDir("actor", () => {
-                        UIManager.instance.openPanel("UIGame", false)
-                        this.startSpawnTimer()
-                    })
-                })
-            })
-        })
+        this.loadDirectory(0);
+    }
+
+    loadDirectory(dirIndex:number){
+        if (dirIndex >= DynamicResourceDefine.directory.length) {
+            this.onLevelLoaded();
+            return;
+        }
+        
+        resources.loadDir(DynamicResourceDefine.directory[dirIndex], ()=>{
+            dirIndex++;
+            this.loadDirectory(dirIndex);
+        })        
+    }
+
+    onLevelLoaded() {
+        ActorManager.instance.init();
+        UIManager.instance.openPanel("UIGame", false)
+        this.startSpawnTimer()
     }
 
     startSpawnTimer() {
@@ -96,45 +91,29 @@ export class Level extends Component {
         this.unscheduleAllCallbacks();
 
         Level._instance = null;
+        UIManager.instance.clearAllPanels();
+        ActorManager.instance.clear();
     }
 
     randomSpawn() {
-        if (this.enemies.length >= this.maxAlive) {
+        if (ActorManager.instance.enemies.length >= this.maxAlive) {
             return;
         }
-        this.enemyIndex = math.randomRangeInt(0, this.enemyPrefabs.length);
         this.spawnPos.x = math.randomRange(this.spawnRect.xMin, this.spawnRect.xMax);
         this.spawnPos.z = math.randomRange(this.spawnRect.yMin, this.spawnRect.yMax);
         this.doSpawn(this.spawnPos)
     }
 
     doSpawn(spawnPoint: Vec3) {
-        const prefab = this.enemyPrefabs[this.enemyIndex];
-        const enemy = instantiate(prefab);
-        this.enemies.push(enemy);
-        
-        enemy.on(Events.onDead, this.onEnemyDead, this);
+        const enemy = ActorManager.instance.createRandomEnemy();
         enemy.setPosition(spawnPoint);
-
         director.getScene()?.addChild(enemy);
 
         let rand = randomRange(0.3, 2.0);
-
         let actor = enemy.getComponent(Actor);
         actor!.hp = this.spawnHp;
-
         let rigid = enemy.getComponent(RigidBody)!;
         rigid.mass = rand;
-
         enemy.scale = v3(rigid.mass, rigid.mass, rigid.mass);
     }
-
-    onEnemyDead(actor: EnemyController) {
-        let i = this.enemies.indexOf(actor.node);
-        if (i < 0) {
-            throw new Error('actor not found')
-        }
-        this.enemies.splice(i, 1);
-    }
 }
-

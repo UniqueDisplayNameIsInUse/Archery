@@ -6,6 +6,7 @@ import { Actor } from './Actor';
 import { StateDefine } from './StateDefine';
 import { ProjectileEmitter } from './ProjectileEmiiter';
 import { Level } from '../level/Level';
+import { ActorManager } from '../level/ActorManager';
 const { ccclass, property, requireComponent } = _decorator;
 
 let tempForward = v3();
@@ -17,11 +18,6 @@ let tempForward = v3();
 @requireComponent(Actor)
 @requireComponent(ProjectileEmitter)
 export class PlayerController extends Component {
-
-    private static _instance: PlayerController;
-    static get instance() {
-        return this._instance;
-    }
 
     @property(Node)
     bow: Node | null = null;
@@ -51,12 +47,9 @@ export class PlayerController extends Component {
 
     actor: Actor | null = null;
 
-    onLoad() {
-        PlayerController._instance = this;
-    }
-
     start() {
         this.actor = this.node.getComponent(Actor);
+        ActorManager.instance.playerActor = this.actor;
         this.projectileEmitter = this.node.getComponent(ProjectileEmitter);
         this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);
         this.node.on(Events.onEnemyKilled, this.onKilled, this);
@@ -65,7 +58,7 @@ export class PlayerController extends Component {
     }
 
     onDestroy() {
-        PlayerController._instance = null;
+        ActorManager.instance.playerActor = null;
 
         this.node.off("onFrameAttackLoose", this.onFrameAttackLoose, this);
         this.node.off(Events.onEnemyKilled, this.onKilled, this);
@@ -80,17 +73,17 @@ export class PlayerController extends Component {
         if (len > 0.1) {
             this.actor.changeState(StateDefine.Run);
         } else {
-            // // 查找面前是否有怪物
-            // let enemy = this.getNeareastEnemy()
-            // if (enemy) {
-            //     Vec3.subtract(this.actor.destForward, enemy.worldPosition, this.node.worldPosition);
-            //     this.actor.destForward.normalize()
+            // 查找面前是否有怪物
+            let enemy = this.getNeareastEnemy()
+            if (enemy) {
+                Vec3.subtract(this.actor.destForward, enemy.worldPosition, this.node.worldPosition);
+                this.actor.destForward.normalize()
 
-            //     // 如果有射击
-            //     this.actor?.changeState(StateDefine.Attack)
-            // } else {
-            //     this.actor.changeState(StateDefine.Idle);
-            // }
+                // 如果有射击
+                this.actor?.changeState(StateDefine.Attack)
+            } else {
+                this.actor.changeState(StateDefine.Idle);
+            }
         }
     }
 
@@ -123,7 +116,7 @@ export class PlayerController extends Component {
             property.penetration = this._penetration;
             const willChase = randomRange(0, 100) < this._chaseRate;
             if (willChase) {
-                projectile.target = this.getRandomEnemy();
+                projectile.target = ActorManager.instance.randomEnemy;
                 property.chase = willChase && projectile.target != null;
             }
             projectile?.fire();
@@ -183,7 +176,7 @@ export class PlayerController extends Component {
     }
 
     getNeareastEnemy(): Node | null {
-        let enemies = Level.intance?.enemies;
+        let enemies = ActorManager.instance.enemies;
         if (!enemies || enemies?.length == 0) {
             return null;
         }
@@ -198,18 +191,7 @@ export class PlayerController extends Component {
             }
         }
 
-        if (nearastEnemy)
-            return nearastEnemy;
-    }
-
-    getRandomEnemy(): Node | null {
-        let enemies = Level.intance?.enemies;
-        if (!enemies || enemies?.length == 0) {
-            return null;
-        }
-
-        let rand = randomRangeInt(0, enemies.length);
-        return enemies[rand];
+        return nearastEnemy;
     }
 }
 

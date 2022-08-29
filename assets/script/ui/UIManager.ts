@@ -7,48 +7,67 @@ export enum DialogDef {
 }
 
 /***
- * 
+ *  UI 管理器
  */
 @ccclass("UIManager")
-export class UIManager extends Component {
+export class UIManager {
 
     private static _instance: UIManager;
     static get instance(): UIManager {
+        if (!this._instance) {
+            this._instance = new UIManager();
+        }
         return this._instance;
     }
 
-    panels: Map<string, Node> = new Map();
+    /**
+     * UI 的根节点
+     */
+    private uiRoot: Node | null = null;
 
-    start() {
-        UIManager._instance = this;      
-    }
+    /**
+     * 面板
+     */
+    private panels: Map<string, Node> = new Map();
 
-    onDestroy() {
-        UIManager._instance = null;
-    }
+    /**
+     * 打开面板
+     * @param prefabName 预制体的名字
+     * @param bringToTop 是否将面板展示在最上
+     * @returns 
+     */
+    openPanel(prefabName: string, bringToTop: boolean = true) {
 
-    openPanel(name: string, bringToTop: boolean = true) {
-        if (this.panels.has(name)) {
-            let panel = this.panels.get(name);
+        if (!this.uiRoot) {
+            this.uiRoot = find("UIRoot");
+        }
+
+        if (this.panels.has(prefabName)) {
+            let panel = this.panels.get(prefabName);
             panel.active = true;
             if (bringToTop) {
-                panel.setSiblingIndex(this.node.children.length - 1);
+                panel.setSiblingIndex(this.uiRoot.children.length - 1);
             }
             return;
         }
 
-        let prefab = resources.get("ui/prefab/" + name);
+        let prefab = resources.get("ui/prefab/" + prefabName);
         let node = instantiate(prefab as Prefab);
-        this.node.addChild(node)
-        this.panels.set(name, node);
+        this.uiRoot.addChild(node)
+        this.panels.set(prefabName, node);
         if (bringToTop) {
-            node.setSiblingIndex(this.node.children.length - 1)
+            node.setSiblingIndex(this.uiRoot.children.length - 1)
         }
     }
 
-    closePanel(name: string, destory: boolean = false) {
-        if (this.panels.has(name)) {
-            let panel = this.panels.get(name);
+    /**
+     * 关闭面板
+     * @param nodeName 节点的名字
+     * @param destory 销毁
+     */
+    closePanel(nodeName: string, destory: boolean = false) {
+        if (this.panels.has(nodeName)) {
+            let panel = this.panels.get(nodeName);
             if (panel) {
                 if (destory) {
                     panel.removeFromParent();
@@ -59,9 +78,14 @@ export class UIManager extends Component {
         }
     }
 
+    /**
+     * 弹出对话框
+     * 对话框只能有1个
+     * @param name 
+     */
     showDialog(name: string) {
         for (let dialogName in DialogDef) {
-            if (dialogName != name) {
+            if (dialogName == name) {
                 this.openPanel(name);
             } else {
                 this.closePanel(name);
@@ -69,10 +93,22 @@ export class UIManager extends Component {
         }
     }
 
+    /**
+     * 关闭对话框
+     */
     closeDialog() {
         for (let dialogName in DialogDef) {
             this.closePanel(dialogName);
         }
     }
-}
 
+    /**
+     * 关闭并销毁所有面板
+     */
+    clearAllPanels(){
+        for(let panel of this.panels.values()){
+            panel.removeFromParent();            
+        }
+        this.panels = new Map();
+    }
+}

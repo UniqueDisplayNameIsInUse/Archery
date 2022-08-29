@@ -10,11 +10,20 @@ const { ccclass, property } = _decorator;
 @ccclass('ProjectileEmitter')
 export class ProjectileEmitter extends Component {
 
+    /**
+     * 投射物预制体
+     */
     @property(Prefab)
     projectile: Prefab | null = null;
 
+    /**
+     * 投射物内存池
+     */
     prefabPool: Pool<Node> | null = null;
 
+    /**
+     * 投射物属性内存池
+     */
     propertyPool: Pool<ProjectileProperty> | null = null;    
 
     start() {
