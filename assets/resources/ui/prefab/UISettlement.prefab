@@ -28,20 +28,23 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 22
+        "__id__": 23
       },
       {
-        "__id__": 24
+        "__id__": 25
       },
       {
-        "__id__": 26
+        "__id__": 27
       },
       {
-        "__id__": 28
+        "__id__": 29
+      },
+      {
+        "__id__": 31
       }
     ],
     "_prefab": {
-      "__id__": 30
+      "__id__": 33
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -225,7 +228,7 @@
       }
     ],
     "_prefab": {
-      "__id__": 21
+      "__id__": 22
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -427,9 +430,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 214,
+      "g": 214,
+      "b": 214,
       "a": 255
     },
     "_spriteFrame": {
@@ -466,9 +469,13 @@
     "__prefab": {
       "__id__": 20
     },
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 21
+      }
+    ],
     "_interactable": true,
-    "_transition": 2,
+    "_transition": 1,
     "_normalColor": {
       "__type__": "cc.Color",
       "r": 214,
@@ -525,6 +532,16 @@
     "fileId": "b2oihnI5RCi6N0eyI9e5e8"
   },
   {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "",
+    "_componentId": "e6f6c+HXK1NY6PrLAwRNc2I",
+    "handler": "resStartGame",
+    "customEventData": ""
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -543,7 +560,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 23
+      "__id__": 24
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -570,7 +587,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 25
+      "__id__": 26
     },
     "_alignFlags": 45,
     "_target": null,
@@ -605,7 +622,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 27
+      "__id__": 28
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -615,7 +632,7 @@
       "r": 75,
       "g": 75,
       "b": 75,
-      "a": 117
+      "a": 255
     },
     "_spriteFrame": {
       "__uuid__": "951249e0-9f16-456d-8b85-a6ca954da16b@f9941",
@@ -649,13 +666,30 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 29
+      "__id__": 30
     },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "15lB3UeYVF4rCkbOcrlu9G"
+  },
+  {
+    "__type__": "e6f6c+HXK1NY6PrLAwRNc2I",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 32
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "3c/LNjZTBHi4nYPWTzX3oy"
   },
   {
     "__type__": "cc.PrefabInfo",

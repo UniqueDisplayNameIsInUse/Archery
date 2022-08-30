@@ -1,7 +1,5 @@
-import { _decorator, Component, instantiate, BoxCollider, Rect, v2, Prefab, Vec3, macro, v3, math, director, Size, Node, RigidBody, randomRange, resources } from 'cc';
+import { _decorator, Component, BoxCollider, Rect, v2, Vec3, macro, v3, math, director, Size, RigidBody, randomRange, resources } from 'cc';
 import { Actor } from '../actor/Actor';
-import { EnemyController } from '../actor/EnemyController';
-import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { UIManager } from '../ui/UIManager';
 import { ActorManager } from './ActorManager';
@@ -55,16 +53,16 @@ export class Level extends Component {
         this.loadDirectory(0);
     }
 
-    loadDirectory(dirIndex:number){
+    loadDirectory(dirIndex: number) {
         if (dirIndex >= DynamicResourceDefine.directory.length) {
             this.onLevelLoaded();
             return;
         }
-        
-        resources.loadDir(DynamicResourceDefine.directory[dirIndex], ()=>{
+
+        resources.loadDir(DynamicResourceDefine.directory[dirIndex], () => {
             dirIndex++;
             this.loadDirectory(dirIndex);
-        })        
+        })
     }
 
     onLevelLoaded() {
@@ -99,6 +97,7 @@ export class Level extends Component {
         if (ActorManager.instance.enemies.length >= this.maxAlive) {
             return;
         }
+
         this.spawnPos.x = math.randomRange(this.spawnRect.xMin, this.spawnRect.xMax);
         this.spawnPos.z = math.randomRange(this.spawnRect.yMin, this.spawnRect.yMax);
         this.doSpawn(this.spawnPos)
@@ -111,7 +110,9 @@ export class Level extends Component {
 
         let rand = randomRange(0.3, 2.0);
         let actor = enemy.getComponent(Actor);
-        actor!.hp = this.spawnHp;
+        actor.actorProperty.hp = this.spawnHp;
+        actor.actorProperty.maxHp = this.spawnHp;
+        actor.respawn();
         let rigid = enemy.getComponent(RigidBody)!;
         rigid.mass = rand;
         enemy.scale = v3(rigid.mass, rigid.mass, rigid.mass);

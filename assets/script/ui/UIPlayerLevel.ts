@@ -5,6 +5,9 @@ import { ActorManager } from '../level/ActorManager';
 import { UIIMageLabel } from './UIIMageLabel';
 const { ccclass, property, requireComponent } = _decorator;
 
+/**
+ * 玩家等级
+ */
 @ccclass('UIPlayerLevel')
 @requireComponent(UIIMageLabel)
 export class UIPlayerLevel extends Component {
@@ -14,12 +17,14 @@ export class UIPlayerLevel extends Component {
     start() {
         this.level = this.node.getComponent(UIIMageLabel);
 
-        ActorManager.instance.playerActor.node.on(Events.onPlayerUpgrade, this.onPlayerUpgrade, this);
-        this.level.string = ActorManager.instance.playerController.level.toString();
+        let player = ActorManager.instance.playerActor;
+        player.node.on(Events.onPlayerUpgrade, this.onPlayerUpgrade, this);
+        this.level.string = player.actorProperty.level.toString();
     }
 
     onPlayerUpgrade() {
-        this.level.string = ActorManager.instance.playerActor.getComponent(PlayerController).level.toString();
+        this.level.string = ActorManager.instance.playerActor.actorProperty.level.toString();
     }
+
 }
 

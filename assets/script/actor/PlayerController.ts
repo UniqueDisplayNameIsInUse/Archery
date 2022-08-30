@@ -1,11 +1,10 @@
-import { Component, math, Node, randomRange, randomRangeInt, v3, Vec3, _decorator } from 'cc';
+import { Component, math, Node, randomRange, v3, Vec3, _decorator } from 'cc';
 import { Events } from '../events/Events';
 import { VirtualInput } from '../input/VirtualInput';
 import { MathUtil } from '../util/MathUtil';
 import { Actor } from './Actor';
 import { StateDefine } from './StateDefine';
 import { ProjectileEmitter } from './ProjectileEmiiter';
-import { Level } from '../level/Level';
 import { ActorManager } from '../level/ActorManager';
 const { ccclass, property, requireComponent } = _decorator;
 
@@ -29,21 +28,7 @@ export class PlayerController extends Component {
 
     shootDirection: Vec3 = v3();
 
-    exp: number = 0;
-
-    maxExp: number = 20;
-
-    level: number = 1;
-
-    skillPoint: number = 0;
-
-    private _projectileCount: number = 0;
-
-    private _splitAngle: number[] = [];
-
-    private _chaseRate: number = 5.0;
-
-    private _penetration: number = 0.0;
+    private _splitAngle: number[] = [0];
 
     actor: Actor | null = null;
 
@@ -53,8 +38,6 @@ export class PlayerController extends Component {
         this.projectileEmitter = this.node.getComponent(ProjectileEmitter);
         this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);
         this.node.on(Events.onEnemyKilled, this.onKilled, this);
-
-        this.projectileCount = 3;
     }
 
     onDestroy() {
@@ -113,8 +96,8 @@ export class PlayerController extends Component {
             projectile.host = this.node;
 
             let property = projectile.projectProperty;
-            property.penetration = this._penetration;
-            const willChase = randomRange(0, 100) < this._chaseRate;
+            property.penetration = this.actor.actorProperty.penetration;
+            const willChase = randomRange(0, 100) < this.actor.actorProperty.chaseRate;
             if (willChase) {
                 projectile.target = ActorManager.instance.randomEnemy;
                 property.chase = willChase && projectile.target != null;
@@ -124,16 +107,17 @@ export class PlayerController extends Component {
     }
 
     set projectileCount(count: number) {
+        let actorProperty = this.actor.actorProperty;
         if (count <= 0) {
-            this._projectileCount = 1;
+            actorProperty .projectileCount = 1;
         }
-        this._projectileCount = count;
+        actorProperty.projectileCount = count;
         this._splitAngle = [];
 
         const a = math.toRadian(10);
         const even = count % 2 != 0;
 
-        const len = Math.floor(this._projectileCount / 2);
+        const len = Math.floor(actorProperty.projectileCount / 2);
         for (let i = 0; i < len; i++) {
             this._splitAngle.push(-a * (i + 1));
             this._splitAngle.push(a * (i + 1));
@@ -144,25 +128,25 @@ export class PlayerController extends Component {
         }
     }
 
-    get projectileCount(): number { return this._projectileCount; }
+    get projectileCount(): number { return this.actor.actorProperty.projectileCount; }
 
     set chaseRate(val: number) {
-        this._chaseRate = math.clamp(this._chaseRate + val, 0, 100);
+        this.actor.actorProperty.chaseRate = math.clamp(this.actor.actorProperty.chaseRate+ val, 0, 100);
     }
 
     get chaseRate(): number {
-        return this._chaseRate;
+        return this.actor.actorProperty.chaseRate;
     }
 
     onKilled(actor: Actor) {
-        this.exp++;
+        let acotrProperty = this.actor.actorProperty;
+        acotrProperty.exp++;
         this.node.emit(Events.onExpGain);
 
-        if (this.exp >= this.maxExp) {
-            this.exp -= this.maxExp;
-            this.maxExp *= 1.1
-            this.level++;
-            this.skillPoint++;
+        if (acotrProperty.exp >= acotrProperty.maxExp) {
+            acotrProperty.exp -= acotrProperty.maxExp;
+            acotrProperty.maxExp *= 1.1;
+            acotrProperty.level++;
             this.onUpgradeLevel();
         }
     }
@@ -172,7 +156,7 @@ export class PlayerController extends Component {
     }
 
     set penetraion(val: number) {
-        this._penetration = math.clamp(this._penetration + val, 0, 100);
+        this.actor.actorProperty.penetration = math.clamp(this.actor.actorProperty.penetration + val, 0, 100);
     }
 
     getNeareastEnemy(): Node | null {

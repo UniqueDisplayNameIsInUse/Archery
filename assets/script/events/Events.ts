@@ -18,6 +18,11 @@ export class Events {
     static onEnemyKilled: string = "onKilled";
 
     /**
+     * 受伤
+     */
+    static onHurt : string = "onHurt";
+
+    /**
      * 投射物销毁
      */
     static onProjectileDead : string = "onProjectileDead";

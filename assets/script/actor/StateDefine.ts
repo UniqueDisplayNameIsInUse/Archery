@@ -1,3 +1,6 @@
+/**
+ * 角色状态
+ */
 export class StateDefine {
 
     static readonly Idle: string = "idle";

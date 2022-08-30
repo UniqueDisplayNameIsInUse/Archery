@@ -20,7 +20,7 @@ export class Projectile extends Component {
 
     private position: Vec3 = v3()
 
-    projectProperty: ProjectileProperty | null = null;
+    projectProperty: ProjectileProperty = new ProjectileProperty();
 
     host: Node | null = null;
 

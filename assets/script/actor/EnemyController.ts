@@ -1,8 +1,6 @@
-import { ccenum, CCFloat, CCInteger, Collider, Component, game, ICollisionEvent, macro, math, Node, v3, Vec3, _decorator } from 'cc';
+import { ccenum, CCFloat, CCInteger, Collider, Component, game, macro, math, Node, v3, Vec3, _decorator } from 'cc';
 import { ActorManager } from '../level/ActorManager';
 import { Actor } from './Actor';
-import { PhysicsGroup } from './PhysicsGroup';
-import { Projectile } from './Projectile';
 import { ProjectileEmitter } from './ProjectileEmiiter';
 import { StateDefine } from './StateDefine';
 const { ccclass, property, requireComponent } = _decorator;
@@ -57,12 +55,7 @@ export class EnemyController extends Component {
         }
 
         this.schedule(this.executeAI, 1.0, macro.REPEAT_FOREVER, 1.0)
-
-        const collider = this.node.getComponent(Collider);
-        collider?.on("onTriggerEnter", this.onTriggerEnter, this);
-
         this.node.on("onFrameAttack", this.onFrameAttack, this);
-
         this.target = ActorManager.instance.playerActor;
     }
 
@@ -70,8 +63,6 @@ export class EnemyController extends Component {
         this.unschedule(this.executeAI);
 
         const collider = this.node.getComponent(Collider);
-        collider?.off("onTriggerEnter", this.onTriggerEnter, this);
-
         this.node.off("onFrameAttack", this.onFrameAttack, this);
     }
 
@@ -124,19 +115,7 @@ export class EnemyController extends Component {
         return Vec3.angle(this.node.forward, temp) < math.toRadian(60);
     }
 
-    onTriggerEnter(event: ICollisionEvent) {
-        if (event.otherCollider.getGroup() != PhysicsGroup.PlayerProjectile) {
-            return;
-        }
-
-        const projectile = event.otherCollider.getComponent(Projectile);
-        const hostActor = projectile!.host?.getComponent(Actor);
-        let hurtDirection = v3()
-        Vec3.subtract(hurtDirection, event.otherCollider.node.worldPosition, event.selfCollider.node.worldPosition);
-        hurtDirection.normalize();
-        this.actor.hurt(hostActor!.damange, hostActor!, hurtDirection);
-    }
-
+   
     onFrameAttack() {
         if (!this.target) {
             return;
@@ -150,16 +129,13 @@ export class EnemyController extends Component {
                 const distance = dir.length();
 
                 if (distance < this.attackRange) {
-                    //this.target.hurt(this.damange, this);
-                    //this.target.hurt(0, this);
+                    this.target.hurt(this.actor.actorProperty.attack, this.actor, dir);                    
                 }
             }
         } else {
             let projectile = this.projectileEmitter!.create();
             projectile.node.worldPosition = this.projectileStart.worldPosition;
 
-            let prop = projectile.projectProperty;
-            prop.chase = math.randomRange(0, 100) < 10;
             projectile.target = this.target.node;
 
             projectile.host = this.node;

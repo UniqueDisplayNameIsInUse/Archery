@@ -1,9 +1,10 @@
-import { _decorator, resources, Prefab, instantiate, log, find, Component, Node } from 'cc';
+import { _decorator, resources, Prefab, instantiate, find, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
 export enum DialogDef {
     UISetting = "UISetting",
     UISkillUpgrade = "UISkillUpgrade",
+    UISettlement = "UISettlement",
 }
 
 /***
@@ -110,5 +111,6 @@ export class UIManager {
             panel.removeFromParent();            
         }
         this.panels = new Map();
+        this.uiRoot = null;
     }
 }

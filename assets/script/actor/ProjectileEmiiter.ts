@@ -21,11 +21,6 @@ export class ProjectileEmitter extends Component {
      */
     prefabPool: Pool<Node> | null = null;
 
-    /**
-     * 投射物属性内存池
-     */
-    propertyPool: Pool<ProjectileProperty> | null = null;    
-
     start() {
         const poolCount = 5;
 
@@ -34,37 +29,25 @@ export class ProjectileEmitter extends Component {
         }, poolCount, (node: Node) => {
             node.removeFromParent();
         });
-
-        this.propertyPool = new Pool(() => {
-            return new ProjectileProperty();
-        }, poolCount, (projectProperty: ProjectileProperty) => {
-            projectProperty = null;
-        })
     }
 
     onDestroy() {
-        this.prefabPool.destroy();
-        this.propertyPool.destroy();
+        this.prefabPool.destroy();        
     }
 
     create(): Projectile {
         let node = this.prefabPool.alloc();
         if (node.parent == null)
             director.getScene().addChild(node);
-        node.active = true;
-
-        let projectile = node.getComponent(Projectile);
-        projectile.projectProperty = this.propertyPool.alloc();
-
+        node.active = true;        
         node.on(Events.onProjectileDead, this.onProjectileDead, this);
-
+        let projectile = node.getComponent(Projectile);
         return projectile;
     }
 
     onProjectileDead(projectile: Projectile) {
         projectile.node.active = false;
-        projectile.node.off(Events.onProjectileDead, this.onProjectileDead, this);
-        this.propertyPool.free(projectile.projectProperty);
+        projectile.node.off(Events.onProjectileDead, this.onProjectileDead, this);        
         this.prefabPool.free(projectile.node);
     }
 }

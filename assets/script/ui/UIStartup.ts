@@ -1,6 +1,9 @@
 import { _decorator, Component, director, Button } from 'cc';
 const { ccclass, property } = _decorator;
 
+/**
+ * 开始界面
+ */
 @ccclass('UIStartup')
 export class UIStartup extends Component {
 

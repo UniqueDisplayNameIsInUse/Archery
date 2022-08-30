@@ -1,6 +1,5 @@
-import { _decorator, Node, resources, Prefab, instantiate, director, math, Animation, SkeletalAnimationState } from 'cc';
+import { _decorator, Node, resources, Prefab, instantiate, director, math, Animation, SkeletalAnimationState, System } from 'cc';
 import { Actor } from '../actor/Actor';
-import { PlayerController } from '../actor/PlayerController';
 import { StateDefine } from '../actor/StateDefine';
 import { EffectManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
@@ -25,7 +24,7 @@ export class ActorManager {
     private enemyNames: Array<string> = [];
     enemies: Array<Node> = [];
 
-    _playerActor: Actor | null = null;
+    private _playerActor: Actor | null = null;
 
     get playerActor(): Actor | null {
         return this._playerActor;
@@ -33,19 +32,6 @@ export class ActorManager {
 
     set playerActor(actor: Actor | null) {
         this._playerActor = actor;
-        if (actor) {
-            this.playerController = actor.getComponent(PlayerController);
-        }
-    }
-
-    _playerController: PlayerController | null = null;
-
-    private set playerController(playerController: PlayerController) {
-        this._playerController = playerController;
-    }
-
-    get playerController(): PlayerController {
-        return this._playerController;
     }
 
     init() {
@@ -87,12 +73,12 @@ export class ActorManager {
     }
 
     private onEnemyDead(node: Node) {
-        this.enemyPools.free(node.name, node);
-        let index = this.enemies.indexOf(node);
-        this.enemies.splice(index, 1);
         let skeletonAnimation = node.getComponent(Actor).skeletalAnimation;
         skeletonAnimation.once(Animation.EventType.FINISHED, (type: Animation.EventType, state: SkeletalAnimationState) => {
             if (state.name == StateDefine.Die) {
+                this.enemyPools.free(node.name, node);
+                let index = this.enemies.indexOf(node);
+                this.enemies.splice(index, 1);
                 EffectManager.instance?.playDieEffect(node.worldPosition);
                 node.active = false;
             }
