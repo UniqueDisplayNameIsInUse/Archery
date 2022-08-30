@@ -1,5 +1,5 @@
 import { _decorator, Component, Slider, math, ProgressBar, Button, Node } from 'cc';
-import { Config } from '../config/Config';
+import { Setting } from '../config/Setting';
 import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
@@ -32,42 +32,42 @@ export class UISetting extends Component {
     /**
      * 关闭按钮
      */
-    btnClose : Node | null = null;
+    btnClose: Node | null = null;
 
     start() {
         this.sliderBgmVolume = this.node.getChildByName("Bgm").getComponent(Slider);
-        this.sliderBgmVolume.node.on("slide",this.onBgmVolumeChanged, this);
-        this.progressBgmVolume = this.sliderBgmVolume.node.getChildByName("ProgressBar").getComponent(ProgressBar);        
+        this.sliderBgmVolume.node.on("slide", this.onBgmVolumeChanged, this);
+        this.progressBgmVolume = this.sliderBgmVolume.node.getChildByName("ProgressBar").getComponent(ProgressBar);
 
         this.sliderSfxVolume = this.node.getChildByName("Sfx").getComponent(Slider);
         this.sliderSfxVolume.node.on("slide", this.onSfxVolumeChanged, this);
-        this.progressSfxVolume = this.sliderSfxVolume.node.getChildByName("ProgressBar").getComponent(ProgressBar);        
+        this.progressSfxVolume = this.sliderSfxVolume.node.getChildByName("ProgressBar").getComponent(ProgressBar);
 
-        this.sliderBgmVolume.progress = Config.instance.bgmVolume;
-        this.sliderSfxVolume.progress = Config.instance.sfxVolume;
+        this.sliderBgmVolume.progress = Setting.instance.bgmVolume;
+        this.sliderSfxVolume.progress = Setting.instance.sfxVolume;
 
-        this.progressBgmVolume.progress = Config.instance.bgmVolume;
-        this.progressSfxVolume.progress = Config.instance.sfxVolume;
+        this.progressBgmVolume.progress = Setting.instance.bgmVolume;
+        this.progressSfxVolume.progress = Setting.instance.sfxVolume;
 
         this.btnClose = this.node.getChildByName("BtnClose");
         this.btnClose.on(Button.EventType.CLICK, this.onClose, this);
     }
 
-    onDisable(){
+    onDisable() {
         this.btnClose.off(Button.EventType.CLICK, this.onClose, this);
     }
 
     onBgmVolumeChanged(value: Slider) {
-        Config.instance.bgmVolume = math.clamp01(value.progress);
+        Setting.instance.bgmVolume = math.clamp01(value.progress);
         this.progressBgmVolume.progress = value.progress;
-    }    
+    }
 
     onSfxVolumeChanged(value: Slider) {
-        Config.instance.sfxVolume = math.clamp01(value.progress);
+        Setting.instance.sfxVolume = math.clamp01(value.progress);
         this.progressSfxVolume.progress = value.progress;
     }
 
-    onClose() {        
+    onClose() {
         UIManager.instance.closePanel(this.node.name, false);
     }
 }

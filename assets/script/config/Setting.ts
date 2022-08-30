@@ -6,11 +6,11 @@ const { ccclass, property } = _decorator;
 /**
  * 配置
  */
-@ccclass('Config')
-export class Config extends EventTarget {
+@ccclass('Setting')
+export class Setting extends EventTarget {
 
-    static _instance: Config = new Config();
-    static get instance(): Config {
+    static _instance: Setting = new Setting();
+    static get instance(): Setting {
         return this._instance;
     }
 

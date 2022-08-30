@@ -174,6 +174,30 @@
       ],
       "subMetas": {}
     },
+    "79e35": {
+      "importer": "gltf-animation",
+      "uuid": "36dc4ba3-93f3-43b1-898b-46e9b392a617@79e35",
+      "displayName": "",
+      "id": "79e35",
+      "name": "hit.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 1,
+        "speed": 1,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 0.17
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
     "438fe": {
       "importer": "gltf-skeleton",
       "uuid": "36dc4ba3-93f3-43b1-898b-46e9b392a617@438fe",
@@ -247,6 +271,13 @@
             "from": 9.333333333333334,
             "to": 10,
             "wrapMode": 2
+          },
+          {
+            "name": "hit",
+            "from": 0,
+            "to": 0.17,
+            "wrapMode": 1,
+            "speed": 1
           }
         ]
       }

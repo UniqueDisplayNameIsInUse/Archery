@@ -1,6 +1,7 @@
 import { CCFloat, Collider, Component, ICollisionEvent, math, Node, ParticleSystem, v3, Vec3, _decorator } from 'cc';
 import { EffectManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
+import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { MathUtil } from '../util/MathUtil';
 import { ProjectileProperty } from './ProjectileProperty';
 const { ccclass, property } = _decorator;
@@ -53,7 +54,7 @@ export class Projectile extends Component {
 
     fire() {
         this.startTime = 0;
-        for (let particleSystem of this.particleSystems) {                        
+        for (let particleSystem of this.particleSystems) {
             particleSystem.play();
         }
     }
@@ -83,7 +84,7 @@ export class Projectile extends Component {
         if (this.projectProperty!.penetration <= 0) {
             this.node.emit(Events.onProjectileDead, this)
         }
-        EffectManager.instance?.playExplore(event.selfCollider.node.worldPosition);
+        EffectManager.instance?.play(DynamicResourceDefine.effect.EffDie, event.selfCollider.node.worldPosition);
     }
 }
 

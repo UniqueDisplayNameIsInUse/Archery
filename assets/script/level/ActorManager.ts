@@ -3,6 +3,7 @@ import { Actor } from '../actor/Actor';
 import { StateDefine } from '../actor/StateDefine';
 import { EffectManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
+import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { Pools } from '../util/Pools';
 const { ccclass, property } = _decorator;
 
@@ -79,7 +80,9 @@ export class ActorManager {
                 this.enemyPools.free(node.name, node);
                 let index = this.enemies.indexOf(node);
                 this.enemies.splice(index, 1);
-                EffectManager.instance?.playDieEffect(node.worldPosition);
+                EffectManager.instance?.play(
+                    DynamicResourceDefine.effect.EffDie,
+                    node.worldPosition);
                 node.active = false;
             }
         }, this);

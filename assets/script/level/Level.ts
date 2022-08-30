@@ -98,6 +98,10 @@ export class Level extends Component {
             return;
         }
 
+        if (ActorManager.instance.playerActor.dead) {
+            return;
+        }
+
         this.spawnPos.x = math.randomRange(this.spawnRect.xMin, this.spawnRect.xMax);
         this.spawnPos.z = math.randomRange(this.spawnRect.yMin, this.spawnRect.yMax);
         this.doSpawn(this.spawnPos)

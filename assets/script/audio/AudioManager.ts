@@ -1,13 +1,9 @@
 import { _decorator, Component, Node, Prefab, AudioSource, resources, instantiate, director } from 'cc';
-import { Config } from '../config/Config';
+import { Setting } from '../config/Setting';
 import { Events } from '../events/Events';
+import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { Pools } from '../util/Pools';
 const { ccclass, property } = _decorator;
-
-export const AudioDefine = {
-    SFX_HIT: "SfxHit",
-    SFX_SHOOT: "SfxShoot"
-}
 
 /**
  * 音效管理器
@@ -30,20 +26,19 @@ export class AudioManager extends Component {
     prefabs: Map<string, Prefab> = new Map()
 
     start() {
-        AudioManager._instance = this;        
+        AudioManager._instance = this;
         this.createPools()
-        Config.instance.on(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
+        Setting.instance.on(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
     }
 
     onDestroy() {
         AudioManager._instance = null;
         this.audioPools.destroyAll()
         this.audioPools = null;
-        Config.instance.off(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
+        Setting.instance.off(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
     }
 
     playBgm(path: string) {
-        if (!this.audioLoaded) return;
         if (this.bgm) {
             this.bgm.stop()
             this.audioPools.free(this.bgmPath, this.bgm.node);
@@ -51,17 +46,16 @@ export class AudioManager extends Component {
         let node = this.audioPools.allocc(path);
         node.active = true;
         let as = node.getComponent(AudioSource);
-        as.volume = Config.instance.bgmVolume;
+        as.volume = Setting.instance.bgmVolume;
         this.bgm = as;
         this.bgmPath = path;
     }
 
     playSfx(path: string) {
-        if (!this.audioLoaded) return;
         let node = this.audioPools.allocc(path);
         node.active = true;
         let as = node.getComponent(AudioSource);
-        as.volume = Config.instance.sfxVolume;
+        as.volume = Setting.instance.sfxVolume;
         as.stop();
         as.play();
         this.schedule(() => {
@@ -82,18 +76,17 @@ export class AudioManager extends Component {
                     node.removeFromParent();
                 })
 
-
                 this.prefabs.set(prefab.data.name, prefab);
             }
             this.audioLoaded = true;
 
-            this.playBgm("Bgm")
+            this.playBgm(DynamicResourceDefine.audio.Bgm);
         });
     }
 
     onBgmVolumeChanged() {
         if (this.bgm) {
-            this.bgm.volume = Config.instance.bgmVolume;
+            this.bgm.volume = Setting.instance.bgmVolume;
         }
     }
 }
