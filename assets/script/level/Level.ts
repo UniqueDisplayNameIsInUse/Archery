@@ -1,5 +1,6 @@
 import { _decorator, Component, BoxCollider, Rect, v2, Vec3, macro, v3, math, director, Size, RigidBody, randomRange, resources } from 'cc';
 import { Actor } from '../actor/Actor';
+import { EffectManager } from '../effect/EffectManager';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { UIManager } from '../ui/UIManager';
 import { ActorManager } from './ActorManager';
@@ -12,7 +13,7 @@ const { ccclass, property } = _decorator;
 export class Level extends Component {
 
     private static _instance;
-    static get intance() {
+    static get instance() {
         return this._instance;
     }
 
@@ -50,23 +51,8 @@ export class Level extends Component {
         this.spawnRect.size = new Size(size!.x, size!.z);
         this.spawnRect.center = v2(wp.x, wp.z);
 
-        this.loadDirectory(0);
-    }
-
-    loadDirectory(dirIndex: number) {
-        if (dirIndex >= DynamicResourceDefine.directory.length) {
-            this.onLevelLoaded();
-            return;
-        }
-
-        resources.loadDir(DynamicResourceDefine.directory[dirIndex], () => {
-            dirIndex++;
-            this.loadDirectory(dirIndex);
-        })
-    }
-
-    onLevelLoaded() {
         ActorManager.instance.init();
+        EffectManager.instance.init();
         UIManager.instance.openPanel("UIGame", false)
         this.startSpawnTimer()
     }
@@ -91,6 +77,7 @@ export class Level extends Component {
         Level._instance = null;
         UIManager.instance.clearAllPanels();
         ActorManager.instance.clear();
+        EffectManager.instance.destory();
     }
 
     randomSpawn() {
@@ -112,7 +99,7 @@ export class Level extends Component {
         enemy.setPosition(spawnPoint);
         director.getScene()?.addChild(enemy);
 
-        let rand = randomRange(0.3, 2.0);
+        let rand = randomRange(1.0, 2.0);
         let actor = enemy.getComponent(Actor);
         actor.actorProperty.hp = this.spawnHp;
         actor.actorProperty.maxHp = this.spawnHp;

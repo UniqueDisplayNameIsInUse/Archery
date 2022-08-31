@@ -32,22 +32,21 @@ export class ProjectileEmitter extends Component {
     }
 
     onDestroy() {
-        this.prefabPool.destroy();        
+        this.prefabPool.destroy();
     }
 
     create(): Projectile {
         let node = this.prefabPool.alloc();
         if (node.parent == null)
             director.getScene().addChild(node);
-        node.active = true;        
-        node.on(Events.onProjectileDead, this.onProjectileDead, this);
+        node.active = true;
+        node.once(Events.onProjectileDead, this.onProjectileDead, this);
         let projectile = node.getComponent(Projectile);
         return projectile;
     }
 
     onProjectileDead(projectile: Projectile) {
         projectile.node.active = false;
-        projectile.node.off(Events.onProjectileDead, this.onProjectileDead, this);        
         this.prefabPool.free(projectile.node);
     }
 }

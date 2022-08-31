@@ -104,7 +104,7 @@ export class EnemyController extends Component {
         this.actor.destForward.set(temp.x, 0, temp.z);
         this.actor.node.forward.set(temp.x, 0, temp.z);
 
-        this.actor.attack();
+        this.actor.changeState(StateDefine.Attack);
         this.lastAttackTime = game.totalTime;
     }
 
@@ -115,7 +115,7 @@ export class EnemyController extends Component {
         return Vec3.angle(this.node.forward, temp) < math.toRadian(60);
     }
 
-   
+
     onFrameAttack() {
         if (!this.target) {
             return;
@@ -129,7 +129,7 @@ export class EnemyController extends Component {
                 const distance = dir.length();
 
                 if (distance < this.attackRange) {
-                    this.target.hurt(this.actor.actorProperty.attack, this.actor, dir);                    
+                    this.target.hurt(this.actor.actorProperty.attack, this.actor, dir);
                 }
             }
         } else {

@@ -35,6 +35,7 @@ export class ActorManager {
         this._playerActor = actor;
     }
 
+
     init() {
         var result = [];
         resources.getDirWithPath("actor/prefab/enemy", Prefab, result);

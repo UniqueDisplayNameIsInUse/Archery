@@ -13,18 +13,19 @@ export class PhysicsGroup {
 
     static readonly PlayerProjectile = 1 << 3;
 
-    static readonly EnemyProjectile = 1 << 4;    
+    static readonly EnemyProjectile = 1 << 4;
 
-    static isHurtable(srcGroup:number, destGroup:number) : boolean {
-        if(srcGroup == this.Enemy ){
+    static isHurtable(srcGroup: number, destGroup: number): boolean {
+
+        if (srcGroup == this.Enemy) {
             return destGroup == this.Player;
         }
 
-        if(srcGroup == this.PlayerProjectile){
+        if (srcGroup == this.PlayerProjectile) {
             return destGroup == this.Enemy;
         }
 
-        if(srcGroup == this.EnemyProjectile){
+        if (srcGroup == this.EnemyProjectile) {
             return destGroup == this.Player;
         }
 

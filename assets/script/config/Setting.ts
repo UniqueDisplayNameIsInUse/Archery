@@ -9,7 +9,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Setting')
 export class Setting extends EventTarget {
 
-    static _instance: Setting = new Setting();
+    private static _instance: Setting = new Setting();
     static get instance(): Setting {
         return this._instance;
     }
@@ -43,8 +43,7 @@ export class Setting extends EventTarget {
         return this._sfxVolume;
     }
 
-    constructor() {
-        super();
+    load() {
         this._bgmVolume = PlayerPreference.getFloat("bgmVolume");
         if (isNaN(this._bgmVolume)) {
             this._bgmVolume = 1.0;

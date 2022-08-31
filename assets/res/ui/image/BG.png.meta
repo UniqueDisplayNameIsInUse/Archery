@@ -115,7 +115,8 @@
         },
         "isUuid": true,
         "imageUuidOrDatabaseUri": "a0649c65-79d9-4f5c-bdad-58cce92724e0@6c48a",
-        "atlasUuid": ""
+        "atlasUuid": "",
+        "mipfilter": "none"
       },
       "ver": "1.0.11",
       "imported": true,

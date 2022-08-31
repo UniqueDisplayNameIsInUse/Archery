@@ -5,7 +5,7 @@ import { ActorProperty } from './ActorProperty';
 import { PhysicsGroup } from './PhysicsGroup';
 import { Projectile } from './Projectile';
 import { StateDefine } from './StateDefine';
-const { ccclass, property, requireComponent } = _decorator;
+const { ccclass, property } = _decorator;
 
 let tempVelocity: Vec3 = v3();
 
@@ -18,7 +18,7 @@ export class Actor extends Component {
     @property(SkeletalAnimation)
     skeletalAnimation: SkeletalAnimation | null = null;
 
-    currState: StateDefine | string = StateDefine.Idle;    
+    currState: StateDefine | string = StateDefine.Idle;
 
     collider: Collider | null = null;
 
@@ -36,12 +36,12 @@ export class Actor extends Component {
         return this.currState == StateDefine.Die;
     }
 
-    actorProperty : ActorProperty = new ActorProperty();
+    actorProperty: ActorProperty = new ActorProperty();
 
     start() {
         this.rigidbody = this.node.getComponent(RigidBody);
         this.collider = this.node.getComponent(Collider);
-        this.skeletalAnimation?.on(Animation.EventType.FINISHED, this.onAnimationFinished, this);        
+        this.skeletalAnimation?.on(Animation.EventType.FINISHED, this.onAnimationFinished, this);
         this.collider?.on("onTriggerEnter", this.onTriggerEnter, this);
     }
 
@@ -133,18 +133,14 @@ export class Actor extends Component {
         this.node.emit(Events.onDead, this.node)
     }
 
-    attack() {
-        this.changeState(StateDefine.Attack);
-    }
-
     respawn() {
         this.skeletalAnimation?.crossFade(StateDefine.Idle, 0.1);
         this.currState = StateDefine.Idle;
     }
 
     onTriggerEnter(event: ICollisionEvent) {
-        
-        if(!PhysicsGroup.isHurtable(event.otherCollider.getGroup(), this.collider.getGroup())){
+
+        if (!PhysicsGroup.isHurtable(event.otherCollider.getGroup(), this.collider.getGroup())) {
             return;
         }
 
@@ -155,7 +151,6 @@ export class Actor extends Component {
         hurtDirection.normalize();
         this.hurt(hostActor.actorProperty.attack, hostActor!, hurtDirection);
     }
-
 }
 
 

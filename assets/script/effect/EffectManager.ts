@@ -8,14 +8,15 @@ export class EffectManager {
 
     static _instance: EffectManager;
     static get instance() {
+        if (this._instance == null) {
+            this._instance = new EffectManager();
+        }
         return this._instance;
     }
 
     pools: Pools<string, Node> = new Pools();
 
-    start() {
-        EffectManager._instance = this;
-
+    init() {
         const hitEffect = resources.get(DynamicResourceDefine.effect.EffExplore, Prefab);
         this.pools.newPool(DynamicResourceDefine.effect.EffExplore, (): Node => {
             return instantiate(hitEffect);
@@ -33,7 +34,7 @@ export class EffectManager {
         })
     }
 
-    onDestroy() {
+    destory() {
         EffectManager._instance = null;
 
         this.pools.destroyAll();
@@ -52,6 +53,11 @@ export class EffectManager {
         node.active = true;
 
         let ps = node.getComponent(ParticleSystem);
+        ps.scheduleOnce(() => {
+            node.active = false;
+            pool.free(node);
+        }, ps.duration);
+        ps.play();
     }
 }
 

@@ -63,7 +63,7 @@ export class PlayerController extends Component {
                 this.actor.destForward.normalize()
 
                 // 如果有射击
-                this.actor?.changeState(StateDefine.Attack)
+                this.actor.changeState(StateDefine.Attack);
             } else {
                 this.actor.changeState(StateDefine.Idle);
             }
@@ -109,7 +109,7 @@ export class PlayerController extends Component {
     set projectileCount(count: number) {
         let actorProperty = this.actor.actorProperty;
         if (count <= 0) {
-            actorProperty .projectileCount = 1;
+            actorProperty.projectileCount = 1;
         }
         actorProperty.projectileCount = count;
         this._splitAngle = [];
@@ -131,7 +131,7 @@ export class PlayerController extends Component {
     get projectileCount(): number { return this.actor.actorProperty.projectileCount; }
 
     set chaseRate(val: number) {
-        this.actor.actorProperty.chaseRate = math.clamp(this.actor.actorProperty.chaseRate+ val, 0, 100);
+        this.actor.actorProperty.chaseRate = math.clamp(this.actor.actorProperty.chaseRate + val, 0, 100);
     }
 
     get chaseRate(): number {
@@ -168,6 +168,12 @@ export class PlayerController extends Component {
         let nearDistance = 99999;
         let nearastEnemy: Node | null = null;
         for (let enemy of enemies) {
+
+            const actor = enemy.getComponent(Actor);
+            if (actor.dead) {
+                continue;
+            }
+
             const distance = Vec3.distance(this.node.worldPosition, enemy.worldPosition);
             if (distance < nearDistance) {
                 nearDistance = distance;

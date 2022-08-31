@@ -84,7 +84,7 @@ export class Projectile extends Component {
         if (this.projectProperty!.penetration <= 0) {
             this.node.emit(Events.onProjectileDead, this)
         }
-        EffectManager.instance?.play(DynamicResourceDefine.effect.EffDie, event.selfCollider.node.worldPosition);
+        EffectManager.instance?.play(DynamicResourceDefine.effect.EffExplore, event.selfCollider.node.worldPosition);
     }
 }
 
