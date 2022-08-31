@@ -110,6 +110,7 @@ export class Actor extends Component {
     }
 
     hurt(dam: number, hurtSource: Actor | null, hurtDirection: Vec3) {
+        this.actorProperty.hp = math.clamp(this.actorProperty.hp - dam, 0, this.actorProperty.maxHp);
         this.changeState(StateDefine.Hit);
         this.node.emit(Events.onHurt, this.actorProperty);
 
@@ -117,7 +118,7 @@ export class Actor extends Component {
             const force = -1.0;
             hurtDirection.multiplyScalar(force);
             this.rigidbody?.applyImpulse(hurtDirection);
-            this.actorProperty.hp -= dam;
+
             if (this.actorProperty.hp <= 0) {
                 this.onDie()
                 hurtSource?.node.emit(Events.onEnemyKilled, this)

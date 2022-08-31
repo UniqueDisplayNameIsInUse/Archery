@@ -52,8 +52,8 @@ export class UIManager {
             return;
         }
 
-        let prefab = resources.get("ui/prefab/" + prefabName);
-        let node = instantiate(prefab as Prefab);
+        let prefab = resources.get("ui/prefab/" + prefabName, Prefab);
+        let node = instantiate(prefab);
         this.uiRoot.addChild(node)
         this.panels.set(prefabName, node);
         if (bringToTop) {
@@ -106,9 +106,9 @@ export class UIManager {
     /**
      * 关闭并销毁所有面板
      */
-    clearAllPanels(){
-        for(let panel of this.panels.values()){
-            panel.removeFromParent();            
+    clearAllPanels() {
+        for (let panel of this.panels.values()) {
+            panel.removeFromParent();
         }
         this.panels = new Map();
         this.uiRoot = null;
