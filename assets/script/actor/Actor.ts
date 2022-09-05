@@ -55,10 +55,6 @@ export class Actor extends Component {
             return;
         }
 
-        // let f = v3();
-        // MathUtil.rotateToward(f, this.node.forward, this.forward, math.toRadian(this.angularSpeed) * deltaTime);
-        // this.node.forward = f;
-
         let a = MathUtil.signAngle(this.node.forward, this.destForward, Vec3.UP);
         let as = v3(0, a * 20, 0);
         this.rigidbody.setAngularVelocity(as);

@@ -20,12 +20,12 @@ export class Events {
     /**
      * 受伤
      */
-    static onHurt : string = "onHurt";
+    static onHurt: string = "onHurt";
 
     /**
      * 投射物销毁
      */
-    static onProjectileDead : string = "onProjectileDead";
+    static onProjectileDead: string = "onProjectileDead";
 
     /**
      * 玩家获取经验值

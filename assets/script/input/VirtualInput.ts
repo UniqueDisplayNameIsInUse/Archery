@@ -2,7 +2,8 @@ import { _decorator } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
- * 输入的值 避免和 `input` 重名使用 VirtualInput
+ * 虚拟摇杆的输入
+ * 避免和 `input` 重名使用 VirtualInput
  */
 @ccclass('VirtualInput')
 export class VirtualInput {

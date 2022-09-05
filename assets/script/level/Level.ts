@@ -1,6 +1,8 @@
 import { _decorator, Component, BoxCollider, Rect, v2, Vec3, macro, v3, math, director, Size, RigidBody, randomRange, resources } from 'cc';
 import { Actor } from '../actor/Actor';
+import { AudioManager } from '../audio/AudioManager';
 import { EffectManager } from '../effect/EffectManager';
+import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { UIManager } from '../ui/UIManager';
 import { ActorManager } from './ActorManager';
@@ -12,7 +14,7 @@ const { ccclass, property } = _decorator;
 @ccclass('Level')
 export class Level extends Component {
 
-    private static _instance;
+    private static _instance: Level;
     static get instance() {
         return this._instance;
     }
@@ -46,15 +48,20 @@ export class Level extends Component {
     start() {
         Level._instance = this;
 
-        const wp = this.spawnCollider!.node.worldPosition;
-        const size = this.spawnCollider?.size;
-        this.spawnRect.size = new Size(size!.x, size!.z);
+        const wp = this.spawnCollider.node.worldPosition;
+        const size = this.spawnCollider.size;
+        this.spawnRect.size = new Size(size.x, size.z);
         this.spawnRect.center = v2(wp.x, wp.z);
 
-        ActorManager.instance.init();
+        ActorManager.instance.init(() => {
+            UIManager.instance.openPanel("UIGame", false)
+            UIManager.instance.closePanel("UILoading", true);
+            this.startSpawnTimer()
+        })
+
         EffectManager.instance.init();
-        UIManager.instance.openPanel("UIGame", false)
-        this.startSpawnTimer()
+
+        AudioManager.instance.init();
     }
 
     startSpawnTimer() {
@@ -64,7 +71,7 @@ export class Level extends Component {
 
         this.schedule(() => {
             this.randomSpawn()
-        }, 5.0, macro.REPEAT_FOREVER, 10)
+        }, 1.0, macro.REPEAT_FOREVER, 10)
 
         this.schedule(() => {
             this.spawnHp *= 1.2;
@@ -80,7 +87,7 @@ export class Level extends Component {
         EffectManager.instance.destory();
     }
 
-    randomSpawn() {
+    private randomSpawn() {
         if (ActorManager.instance.enemies.length >= this.maxAlive) {
             return;
         }
@@ -94,7 +101,7 @@ export class Level extends Component {
         this.doSpawn(this.spawnPos)
     }
 
-    doSpawn(spawnPoint: Vec3) {
+    private doSpawn(spawnPoint: Vec3) {
         const enemy = ActorManager.instance.createRandomEnemy();
         enemy.setPosition(spawnPoint);
         director.getScene()?.addChild(enemy);

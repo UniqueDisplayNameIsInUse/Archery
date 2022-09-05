@@ -5,6 +5,9 @@ let tempVec2: Vec3 = v3()
 let tempVec3: Vec3 = v3()
 let up = v3()
 
+/**
+ * 通用数学库
+ */
 export class MathUtil {
 
     /**

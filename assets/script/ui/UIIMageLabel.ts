@@ -50,6 +50,7 @@ export class UIIMageLabel extends Component {
 
     clearString() {
         for (let child of this.node.children) {
+            child.active = false;
             this.numPool.free(child);
         }
     }
@@ -58,27 +59,31 @@ export class UIIMageLabel extends Component {
 
         this.clearString();
 
-        for (let i = 0; i < this.string.length; i++) {
-            const char = this.string[i];
+        const dir = "ui/art/num/";
 
-            let str = char.toString();
-            if (replacement.has(str)) {
-                str = replacement.get(str);
+        resources.loadDir(dir, () => {
+            for (let i = 0; i < this.string.length; i++) {
+                const char = this.string[i];
+
+                let str = char.toString();
+                if (replacement.has(str)) {
+                    str = replacement.get(str);
+                }
+
+                const path = dir + str + "/spriteFrame";
+                const spriteFrame = resources.get(path, SpriteFrame);
+
+                let node = this.numPool.alloc();
+                if (node.parent == null) {
+                    this.node.addChild(node);
+                }
+                node.active = true;
+                node.setSiblingIndex(i);
+                let sprite = node.getComponent(Sprite);
+                sprite.spriteFrame = spriteFrame;
             }
-
-            const path = "ui/art/num/" + str + "/spriteFrame";
-            const spriteFrame = resources.get(path, SpriteFrame);
-
-            let node = this.numPool.alloc();
-            if (node.parent == null) {
-                this.node.addChild(node);
-            }
-            node.active = true;
-            node.setSiblingIndex(i);
-            let sprite = node.getComponent(Sprite);
-            sprite.spriteFrame = spriteFrame;
-        }
-        this.layout.updateLayout();
+            this.layout.updateLayout();
+        })
     }
 }
 

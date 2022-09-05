@@ -35,15 +35,18 @@ export class ActorManager {
         this._playerActor = actor;
     }
 
+    init(onComplete: () => void) {
+        const enemyPath = DynamicResourceDefine.Actor.Enemy.Path;
+        resources.loadDir(enemyPath, () => {
+            var result = [];
+            resources.getDirWithPath(enemyPath, Prefab, result);
 
-    init() {
-        var result = [];
-        resources.getDirWithPath("actor/prefab/enemy", Prefab, result);
-
-        for (let addressable of result) {
-            let prefab = resources.get(addressable.path, Prefab)
-            this.createEnemyPool(prefab);
-        }
+            for (let addressable of result) {
+                let prefab = resources.get(addressable.path, Prefab)
+                this.createEnemyPool(prefab);
+            }
+            onComplete();
+        })
     }
 
     private createEnemyPool(prefab: Prefab) {
@@ -82,7 +85,7 @@ export class ActorManager {
                 let index = this.enemies.indexOf(node);
                 this.enemies.splice(index, 1);
                 EffectManager.instance?.play(
-                    DynamicResourceDefine.effect.EffDie,
+                    DynamicResourceDefine.Effect.EffDie,
                     node.worldPosition);
                 node.active = false;
             }

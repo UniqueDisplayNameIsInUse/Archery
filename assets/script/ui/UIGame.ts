@@ -73,7 +73,6 @@ export class UIGame extends Component {
     }
 
     onHurt(actorProperty: ActorProperty) {
-        
         this.hpBar.progress = actorProperty.hpPercent;
     }
 }

@@ -52,13 +52,14 @@ export class UIManager {
             return;
         }
 
-        let prefab = resources.get("ui/prefab/" + prefabName, Prefab);
-        let node = instantiate(prefab);
-        this.uiRoot.addChild(node)
-        this.panels.set(prefabName, node);
-        if (bringToTop) {
-            node.setSiblingIndex(this.uiRoot.children.length - 1)
-        }
+        resources.load("ui/prefab/" + prefabName, Prefab, (err, data: Prefab) => {
+            let node = instantiate(data);
+            this.uiRoot.addChild(node)
+            this.panels.set(prefabName, node);
+            if (bringToTop) {
+                node.setSiblingIndex(this.uiRoot.children.length - 1)
+            }
+        })
     }
 
     /**
@@ -87,9 +88,9 @@ export class UIManager {
     showDialog(name: string) {
         for (let dialogName in DialogDef) {
             if (dialogName == name) {
-                this.openPanel(name);
+                this.openPanel(dialogName);
             } else {
-                this.closePanel(name);
+                this.closePanel(dialogName);
             }
         }
     }

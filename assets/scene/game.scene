@@ -39,11 +39,11 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 1110
+      "__id__": 1114
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 1114
+      "__id__": 1115
     },
     "_id": "e2a35c50-435d-4370-bc5b-da9657cf960c"
   },
@@ -14020,14 +14020,12 @@
     "fileId": "07+uMauv5IQaBk1gRL23de",
     "prefabRootNode": null,
     "mountedChildren": [],
-    "mountedComponents": [],
-    "propertyOverrides": [
+    "mountedComponents": [
       {
         "__id__": 1098
-      },
-      {
-        "__id__": 1100
-      },
+      }
+    ],
+    "propertyOverrides": [
       {
         "__id__": 1102
       },
@@ -14039,14 +14037,76 @@
       },
       {
         "__id__": 1108
+      },
+      {
+        "__id__": 1110
+      },
+      {
+        "__id__": 1112
       }
     ],
     "removedComponents": []
   },
   {
-    "__type__": "CCPropertyOverrideInfo",
+    "__type__": "cc.MountedComponentsInfo",
     "targetInfo": {
       "__id__": 1099
+    },
+    "components": [
+      {
+        "__id__": 1100
+      },
+      {
+        "__id__": 1101
+      }
+    ]
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "96cDnj8WFBKblfoeUNzrmN"
+    ]
+  },
+  {
+    "__type__": "cc.AudioSource",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {
+      "mountedRoot": {
+        "__id__": 1095
+      }
+    },
+    "node": {
+      "__id__": 1095
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_clip": null,
+    "_loop": false,
+    "_playOnAwake": true,
+    "_volume": 1,
+    "_id": "a6Vnxu4WxG1Ik0bMbNqNsm"
+  },
+  {
+    "__type__": "da542AFMdtI7oL5lEXx+IVW",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {
+      "mountedRoot": {
+        "__id__": 1095
+      }
+    },
+    "node": {
+      "__id__": 1095
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "34vpLrr7VIrKWFbYGLpdyn"
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1103
     },
     "propertyPath": [
       "_name"
@@ -14062,7 +14122,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 1101
+      "__id__": 1105
     },
     "propertyPath": [
       "_lpos"
@@ -14083,7 +14143,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 1103
+      "__id__": 1107
     },
     "propertyPath": [
       "_lscale"
@@ -14104,7 +14164,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 1105
+      "__id__": 1109
     },
     "propertyPath": [
       "_lrot"
@@ -14126,7 +14186,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 1107
+      "__id__": 1111
     },
     "propertyPath": [
       "_euler"
@@ -14147,7 +14207,7 @@
   {
     "__type__": "CCPropertyOverrideInfo",
     "targetInfo": {
-      "__id__": 1109
+      "__id__": 1113
     },
     "propertyPath": [
       "_enabled"
@@ -14163,11 +14223,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "fileId": "e2a35c50-435d-4370-bc5b-da9657cf960c",
-    "targetOverrides": [
-      {
-        "__id__": 1111
-      }
-    ],
+    "targetOverrides": [],
     "nestedPrefabInstanceRoots": [
       {
         "__id__": 26
@@ -14487,51 +14543,21 @@
     ]
   },
   {
-    "__type__": "cc.TargetOverrideInfo",
-    "source": {
-      "__id__": 1095
-    },
-    "sourceInfo": {
-      "__id__": 1112
-    },
-    "propertyPath": [
-      "spawnCollider"
-    ],
-    "target": {
-      "__id__": 1095
-    },
-    "targetInfo": {
-      "__id__": 1113
-    }
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "09G2dcyTdL+67CPGVc+68c"
-    ]
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "285keG33NMr5oqq//ITCzO"
-    ]
-  },
-  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 1115
-    },
-    "shadows": {
       "__id__": 1116
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 1117
     },
-    "fog": {
+    "_skybox": {
       "__id__": 1118
     },
-    "octree": {
+    "fog": {
       "__id__": 1119
+    },
+    "octree": {
+      "__id__": 1120
     }
   },
   {

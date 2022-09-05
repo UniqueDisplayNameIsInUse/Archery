@@ -54,7 +54,7 @@ export class UISetting extends Component {
     }
 
     onDisable() {
-        this.btnClose.off(Button.EventType.CLICK, this.onClose, this);
+        this.btnClose?.off(Button.EventType.CLICK, this.onClose, this);
     }
 
     onBgmVolumeChanged(value: Slider) {

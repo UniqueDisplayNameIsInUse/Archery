@@ -17,7 +17,8 @@ export class UIStartup extends Component {
     }
 
     onClickEnterGame() {
-        director.loadScene("loading");
+        director.loadScene("game");
     }
+
 }
 

@@ -25,9 +25,8 @@ export class AudioManager extends Component {
 
     prefabs: Map<string, Prefab> = new Map()
 
-    start() {
+    onLoad() {
         AudioManager._instance = this;
-        this.createPools()
         Setting.instance.on(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
     }
 
@@ -36,6 +35,26 @@ export class AudioManager extends Component {
         this.audioPools.destroyAll()
         this.audioPools = null;
         Setting.instance.off(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
+    }
+
+    init() {
+        resources.loadDir("audio/prefab", Prefab, (err: Error, prefabs: Prefab[]): void => {
+            for (let prefab of prefabs) {
+                this.audioPools.newPool(prefab.data.name, (): Node => {
+                    let node = instantiate(prefab);
+                    director.getScene().addChild(node);
+                    node.active = false;
+                    return node;
+                }, 1, (node: Node) => {
+                    node.removeFromParent();
+                })
+
+                this.prefabs.set(prefab.data.name, prefab);
+            }
+            this.audioLoaded = true;
+
+            this.playBgm(DynamicResourceDefine.audio.Bgm);
+        });
     }
 
     playBgm(path: string) {
@@ -62,26 +81,6 @@ export class AudioManager extends Component {
             node.active = false;
             this.audioPools.free(path, node);
         }, as.duration)
-    }
-
-    createPools() {
-        resources.loadDir("audio/prefab", Prefab, (err: Error, prefabs: Prefab[]): void => {
-            for (let prefab of prefabs) {
-                this.audioPools.newPool(prefab.data.name, (): Node => {
-                    let node = instantiate(prefab);
-                    director.getScene().addChild(node);
-                    node.active = false;
-                    return node;
-                }, 1, (node: Node) => {
-                    node.removeFromParent();
-                })
-
-                this.prefabs.set(prefab.data.name, prefab);
-            }
-            this.audioLoaded = true;
-
-            this.playBgm(DynamicResourceDefine.audio.Bgm);
-        });
     }
 
     onBgmVolumeChanged() {

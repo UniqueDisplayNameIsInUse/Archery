@@ -38,6 +38,7 @@ export class PlayerController extends Component {
         this.projectileEmitter = this.node.getComponent(ProjectileEmitter);
         this.node.on("onFrameAttackLoose", this.onFrameAttackLoose, this);
         this.node.on(Events.onEnemyKilled, this.onKilled, this);
+        this.projectileCount = 10;
     }
 
     onDestroy() {

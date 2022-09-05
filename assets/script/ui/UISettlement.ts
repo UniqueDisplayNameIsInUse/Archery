@@ -6,8 +6,10 @@ const { ccclass, property } = _decorator;
  */
 @ccclass('UISettlement')
 export class UISettlement extends Component {
+
     resStartGame() {
         director.loadScene("game", null);
     }
+
 }
 

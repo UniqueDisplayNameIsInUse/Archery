@@ -25,9 +25,9 @@ export class PhysicsGroup {
             return destGroup == this.Enemy;
         }
 
-        if (srcGroup == this.EnemyProjectile) {
-            return destGroup == this.Player;
-        }
+        // if (srcGroup == this.EnemyProjectile) {
+        //     return destGroup == this.Player;
+        // }
 
         return false;
     }

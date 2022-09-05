@@ -19,7 +19,7 @@ export class UIJoyStick extends Component {
      */
     @property(Sprite)
     joyStickBg: Sprite | null = null;
-    
+
     /**
      * 摇杆的半径
      */
@@ -30,7 +30,7 @@ export class UIJoyStick extends Component {
      * 摇杆初始化的位置
      */
     initJoyStickBgPosition: Vec3 = v3()
-    
+
     start() {
         this.node.on(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.node.on(Input.EventType.TOUCH_END, this.onTouchEnd, this);
@@ -52,6 +52,10 @@ export class UIJoyStick extends Component {
         this.joyStickBg.node.setWorldPosition(x, y, 0);
     }
 
+    /**
+     * 触摸移动
+     * @param touchEvent 
+     */
     onTouchMove(touchEvent: EventTouch) {
         // 获取摇杆在 UI 的位置
         let x = touchEvent.touch.getUILocationX();

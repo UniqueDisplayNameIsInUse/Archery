@@ -3,6 +3,9 @@ import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { Pools } from '../util/Pools';
 const { ccclass, property } = _decorator;
 
+/**
+ * 特效管理器
+ */
 @ccclass('EffectManager')
 export class EffectManager {
 
@@ -17,20 +20,22 @@ export class EffectManager {
     pools: Pools<string, Node> = new Pools();
 
     init() {
-        const hitEffect = resources.get(DynamicResourceDefine.effect.EffExplore, Prefab);
-        this.pools.newPool(DynamicResourceDefine.effect.EffExplore, (): Node => {
-            return instantiate(hitEffect);
-        }, 50, (node: Node) => {
-            node.removeFromParent()
-            node.destroy()
-        })
+        resources.loadDir(DynamicResourceDefine.Effect.Path, () => {
+            const hitEffect = resources.get(DynamicResourceDefine.Effect.EffExplore, Prefab);
+            this.pools.newPool(DynamicResourceDefine.Effect.EffExplore, (): Node => {
+                return instantiate(hitEffect);
+            }, 50, (node: Node) => {
+                node.removeFromParent()
+                node.destroy()
+            })
 
-        const exploreEffect = resources.get(DynamicResourceDefine.effect.EffDie, Prefab);
-        this.pools.newPool(DynamicResourceDefine.effect.EffDie, (): Node => {
-            return instantiate(exploreEffect);
-        }, 50, (node: Node) => {
-            node.removeFromParent()
-            node.destroy()
+            const exploreEffect = resources.get(DynamicResourceDefine.Effect.EffDie, Prefab);
+            this.pools.newPool(DynamicResourceDefine.Effect.EffDie, (): Node => {
+                return instantiate(exploreEffect);
+            }, 50, (node: Node) => {
+                node.removeFromParent()
+                node.destroy()
+            })
         })
     }
 

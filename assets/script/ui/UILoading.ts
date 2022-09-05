@@ -1,5 +1,6 @@
-import { _decorator, Component, Node, Label, macro, resources, director } from 'cc';
+import { _decorator, Component, Label, resources, director, Prefab, SpriteFrame } from 'cc';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
+import { ResManager } from '../resource/ResourceManager';
 const { ccclass, property } = _decorator;
 
 /**
@@ -24,8 +25,11 @@ export class UILoading extends Component {
             return;
         }
 
-        resources.loadDir(DynamicResourceDefine.directory[dirIndex], () => {
+        resources.loadDir(DynamicResourceDefine.directory[dirIndex], Prefab, (err: Error, data: (Prefab)[]) => {
             dirIndex++;
+            for (let prefab of data) {
+                ResManager.cacheAsset(prefab.name, prefab);
+            }
             this.loadDirectory(dirIndex);
         })
     }
