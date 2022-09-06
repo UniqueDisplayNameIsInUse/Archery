@@ -53,7 +53,7 @@ export class AudioManager extends Component {
             }
             this.audioLoaded = true;
 
-            this.playBgm(DynamicResourceDefine.audio.Bgm);
+            this.playBgm(DynamicResourceDefine.Audio.Bgm);
         });
     }
 

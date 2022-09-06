@@ -36,7 +36,7 @@ export class ActorManager {
     }
 
     init(onComplete: () => void) {
-        const enemyPath = DynamicResourceDefine.Actor.Enemy.Path;
+        const enemyPath = DynamicResourceDefine.Actor.EnemyPath;
         resources.loadDir(enemyPath, () => {
             var result = [];
             resources.getDirWithPath(enemyPath, Prefab, result);

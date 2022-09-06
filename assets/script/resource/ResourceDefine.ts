@@ -1,11 +1,7 @@
 export const DynamicResourceDefine = {
 
-    directory: ["effect", "audio", "actor", "ui"],
-
     Actor: {
-        Enemy: {
-            Path: "actor/prefab/enemy",
-        }
+        EnemyPath: "actor/prefab/enemy"
     },
 
     Effect: {
@@ -14,7 +10,7 @@ export const DynamicResourceDefine = {
         EffDie: "effect/prefab/EffDie",
     },
 
-    audio: {
+    Audio: {
         Path: "effect/prefab/",
         Bgm: "Bgm",
         SfxHit: "SfxHit",
