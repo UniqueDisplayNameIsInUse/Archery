@@ -5,7 +5,7 @@ import { ActorProperty } from './ActorProperty';
 import { PhysicsGroup } from './PhysicsGroup';
 import { Projectile } from './Projectile';
 import { StateDefine } from './StateDefine';
-const { ccclass, property } = _decorator;
+const { ccclass, property, requireComponent } = _decorator;
 
 let tempVelocity: Vec3 = v3();
 
@@ -18,7 +18,7 @@ export class Actor extends Component {
     @property(SkeletalAnimation)
     skeletalAnimation: SkeletalAnimation | null = null;
 
-    currState: StateDefine | string = StateDefine.Idle;
+    currState: StateDefine | string = StateDefine.Idle;    
 
     collider: Collider | null = null;
 
@@ -36,12 +36,12 @@ export class Actor extends Component {
         return this.currState == StateDefine.Die;
     }
 
-    actorProperty: ActorProperty = new ActorProperty();
+    actorProperty : ActorProperty = new ActorProperty();
 
     start() {
         this.rigidbody = this.node.getComponent(RigidBody);
         this.collider = this.node.getComponent(Collider);
-        this.skeletalAnimation?.on(Animation.EventType.FINISHED, this.onAnimationFinished, this);
+        this.skeletalAnimation?.on(Animation.EventType.FINISHED, this.onAnimationFinished, this);        
         this.collider?.on("onTriggerEnter", this.onTriggerEnter, this);
     }
 
@@ -54,6 +54,10 @@ export class Actor extends Component {
         if (this.currState == StateDefine.Die) {
             return;
         }
+
+        // let f = v3();
+        // MathUtil.rotateToward(f, this.node.forward, this.forward, math.toRadian(this.angularSpeed) * deltaTime);
+        // this.node.forward = f;
 
         let a = MathUtil.signAngle(this.node.forward, this.destForward, Vec3.UP);
         let as = v3(0, a * 20, 0);
@@ -106,15 +110,13 @@ export class Actor extends Component {
     }
 
     hurt(dam: number, hurtSource: Actor | null, hurtDirection: Vec3) {
-        this.actorProperty.hp = math.clamp(this.actorProperty.hp - dam, 0, this.actorProperty.maxHp);
         this.changeState(StateDefine.Hit);
         this.node.emit(Events.onHurt, this.actorProperty);
-
         if (this.currState != StateDefine.Die) {
             const force = -1.0;
             hurtDirection.multiplyScalar(force);
             this.rigidbody?.applyImpulse(hurtDirection);
-
+            this.actorProperty.hp -= dam;
             if (this.actorProperty.hp <= 0) {
                 this.onDie()
                 hurtSource?.node.emit(Events.onEnemyKilled, this)
@@ -130,14 +132,18 @@ export class Actor extends Component {
         this.node.emit(Events.onDead, this.node)
     }
 
+    attack() {
+        this.changeState(StateDefine.Attack);
+    }
+
     respawn() {
         this.skeletalAnimation?.crossFade(StateDefine.Idle, 0.1);
         this.currState = StateDefine.Idle;
     }
 
     onTriggerEnter(event: ICollisionEvent) {
-
-        if (!PhysicsGroup.isHurtable(event.otherCollider.getGroup(), this.collider.getGroup())) {
+        
+        if(!PhysicsGroup.isHurtable(event.otherCollider.getGroup(), this.collider.getGroup())){
             return;
         }
 
@@ -148,6 +154,7 @@ export class Actor extends Component {
         hurtDirection.normalize();
         this.hurt(hostActor.actorProperty.attack, hostActor!, hurtDirection);
     }
+
 }
 
 

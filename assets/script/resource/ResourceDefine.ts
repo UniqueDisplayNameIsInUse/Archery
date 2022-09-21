@@ -14,10 +14,9 @@ export const DynamicResourceDefine = {
         EffDie: "effect/prefab/EffDie",
     },
 
-    audio: {
-        Path: "effect/prefab/",
-        Bgm: "Bgm",
-        SfxHit: "SfxHit",
-        SfxShoot: "SfxShoot",
+    audio: {        
+        Bgm: "audio/prefab/Bgm",
+        SfxHit: "audio/prefab/SfxHit",
+        SfxShoot: "audio/prefab/SfxShoot",
     },
 }

@@ -6,6 +6,8 @@ import { Actor } from './Actor';
 import { StateDefine } from './StateDefine';
 import { ProjectileEmitter } from './ProjectileEmiiter';
 import { ActorManager } from '../level/ActorManager';
+import { DynamicResourceDefine } from '../resource/ResourceDefine';
+import { AudioManager } from '../audio/AudioManager';
 const { ccclass, property, requireComponent } = _decorator;
 
 let tempForward = v3();
@@ -83,6 +85,7 @@ export class PlayerController extends Component {
     }
 
     onFrameAttackLoose() {
+        AudioManager.instance.playSfx(DynamicResourceDefine.audio.SfxShoot);
         const arrowStartPos = this.bowstring!.worldPosition;
         Vec3.subtract(this.shootDirection, this.bow!.worldPosition, arrowStartPos);
         this.shootDirection.normalize();

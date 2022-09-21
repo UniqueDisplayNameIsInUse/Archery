@@ -16,14 +16,9 @@ export class AudioManager extends Component {
         return this._instance;
     }
 
-    audioPools: Pools<string, Node> = new Pools();
+    private bgm: AudioSource | null = null;
 
-    audioLoaded: boolean = false;
-
-    bgmPath: string = '';
-    bgm: AudioSource | null = null;
-
-    prefabs: Map<string, Prefab> = new Map()
+    private sfx: Map<string, AudioSource> = new Map()
 
     onLoad() {
         AudioManager._instance = this;
@@ -32,55 +27,54 @@ export class AudioManager extends Component {
 
     onDestroy() {
         AudioManager._instance = null;
-        this.audioPools.destroyAll()
-        this.audioPools = null;
         Setting.instance.off(Events.onBgmVolumeChanged, this.onBgmVolumeChanged, this)
     }
-
     init() {
-        resources.loadDir("audio/prefab", Prefab, (err: Error, prefabs: Prefab[]): void => {
-            for (let prefab of prefabs) {
-                this.audioPools.newPool(prefab.data.name, (): Node => {
-                    let node = instantiate(prefab);
-                    director.getScene().addChild(node);
-                    node.active = false;
-                    return node;
-                }, 1, (node: Node) => {
-                    node.removeFromParent();
-                })
 
-                this.prefabs.set(prefab.data.name, prefab);
-            }
-            this.audioLoaded = true;
+        resources.load(DynamicResourceDefine.audio.Bgm, Prefab, (err: Error, bgmPrefab: Prefab) => {
+            let bgmNode = instantiate(bgmPrefab);
+            this.node.addChild(bgmNode);
+            this.bgm = bgmNode.getComponent(AudioSource);
+        });
 
-            this.playBgm(DynamicResourceDefine.audio.Bgm);
+        this.initSfx(DynamicResourceDefine.audio.SfxHit);
+        this.initSfx(DynamicResourceDefine.audio.SfxShoot);
+
+    }
+
+    private initSfx(path: string) {
+        resources.load(DynamicResourceDefine.audio.Bgm, Prefab, (err: Error, prefab: Prefab) => {
+            let node = instantiate(prefab);
+            this.node.addChild(node);
+            const as = node.getComponent(AudioSource);
+
+            this.sfx.set(path, as);
         });
     }
 
-    playBgm(path: string) {
+    playBgm() {
+        if (!this.bgm) {
+            return;
+        }
         if (this.bgm) {
             this.bgm.stop()
-            this.audioPools.free(this.bgmPath, this.bgm.node);
         }
-        let node = this.audioPools.allocc(path);
+        let node = this.bgm.node;
         node.active = true;
         let as = node.getComponent(AudioSource);
         as.volume = Setting.instance.bgmVolume;
         this.bgm = as;
-        this.bgmPath = path;
     }
 
     playSfx(path: string) {
-        let node = this.audioPools.allocc(path);
+        if (!this.sfx.has(path)) {
+            return;
+        }
+        let node = this.sfx.get(path).node;
         node.active = true;
         let as = node.getComponent(AudioSource);
-        as.volume = Setting.instance.sfxVolume;
-        as.stop();
+        as.volume = Setting.instance.sfxVolume;        
         as.play();
-        this.schedule(() => {
-            node.active = false;
-            this.audioPools.free(path, node);
-        }, as.duration)
     }
 
     onBgmVolumeChanged() {

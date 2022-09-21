@@ -1,4 +1,5 @@
 import { CCFloat, Collider, Component, ICollisionEvent, math, Node, ParticleSystem, v3, Vec3, _decorator } from 'cc';
+import { AudioManager } from '../audio/AudioManager';
 import { EffectManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
@@ -85,6 +86,7 @@ export class Projectile extends Component {
             this.node.emit(Events.onProjectileDead, this)
         }
         EffectManager.instance?.play(DynamicResourceDefine.Effect.EffExplore, event.selfCollider.node.worldPosition);
+        AudioManager.instance.playSfx(DynamicResourceDefine.audio.SfxHit);
     }
 }
 
