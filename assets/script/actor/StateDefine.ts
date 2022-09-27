@@ -1,15 +1,15 @@
 /**
  * 角色状态
  */
-export class StateDefine {
+export enum StateDefine {
 
-    static readonly Idle: string = "idle";
+    Idle = "idle",
 
-    static readonly Attack: string = "attack";
+    Attack = "attack",
 
-    static readonly Hit: string = "hit";
+    Hit = "hit",
 
-    static readonly Run: string = "run";
+    Run = "run",
 
-    static readonly Die: string = "die";
+    Die = "die"
 }
