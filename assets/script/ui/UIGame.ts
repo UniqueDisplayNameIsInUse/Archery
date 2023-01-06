@@ -43,7 +43,8 @@ export class UIGame extends Component {
         player.node.off(Events.onHurt, this.onHurt, this);
     }
 
-    onExitGame() {
+    onExitGame() {        
+        director.end();
         resources.releaseUnusedAssets()
         director.loadScene("startup")
     }

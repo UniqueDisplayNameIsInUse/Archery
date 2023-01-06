@@ -1,7 +1,7 @@
 import { _decorator, Component, BoxCollider, Rect, v2, Vec3, macro, v3, math, director, Size, RigidBody, randomRange, resources } from 'cc';
 import { Actor } from '../actor/Actor';
 import { AudioManager } from '../audio/AudioManager';
-import { EffectManager } from '../effect/EffectManager';
+import { ParticleManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { UIManager } from '../ui/UIManager';
@@ -59,7 +59,7 @@ export class Level extends Component {
             this.startSpawnTimer()
         })
 
-        EffectManager.instance.init();
+        ParticleManager.instance.init();
 
         AudioManager.instance.init();
     }
@@ -84,7 +84,7 @@ export class Level extends Component {
         Level._instance = null;
         UIManager.instance.clearAllPanels();
         ActorManager.instance.clear();
-        EffectManager.instance.destory();
+        ParticleManager.instance.destory();
     }
 
     private randomSpawn() {

@@ -1,7 +1,7 @@
 import { _decorator, Node, resources, Prefab, instantiate, director, math, Animation, SkeletalAnimationState, System } from 'cc';
 import { Actor } from '../actor/Actor';
 import { StateDefine } from '../actor/StateDefine';
-import { EffectManager } from '../effect/EffectManager';
+import { ParticleManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { Pools } from '../util/Pools';
@@ -36,7 +36,7 @@ export class ActorManager {
     }
 
     init(onComplete: () => void) {
-        const enemyPath = DynamicResourceDefine.Actor.EnemyPath;
+        const enemyPath = DynamicResourceDefine.Actor.Enemy.Path;
         resources.loadDir(enemyPath, () => {
             var result = [];
             resources.getDirWithPath(enemyPath, Prefab, result);
@@ -84,7 +84,7 @@ export class ActorManager {
                 this.enemyPools.free(node.name, node);
                 let index = this.enemies.indexOf(node);
                 this.enemies.splice(index, 1);
-                EffectManager.instance?.play(
+                ParticleManager.instance?.play(
                     DynamicResourceDefine.Effect.EffDie,
                     node.worldPosition);
                 node.active = false;

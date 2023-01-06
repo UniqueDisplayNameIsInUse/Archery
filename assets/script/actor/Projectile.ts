@@ -1,6 +1,6 @@
 import { CCFloat, Collider, Component, ICollisionEvent, math, Node, ParticleSystem, v3, Vec3, _decorator } from 'cc';
 import { AudioManager } from '../audio/AudioManager';
-import { EffectManager } from '../effect/EffectManager';
+import { ParticleManager }  from '../effect/ParticleManager';
 import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { MathUtil } from '../util/MathUtil';
@@ -85,7 +85,7 @@ export class Projectile extends Component {
         if (this.projectProperty!.penetration <= 0) {
             this.node.emit(Events.onProjectileDead, this)
         }
-        EffectManager.instance?.play(DynamicResourceDefine.Effect.EffExplore, event.selfCollider.node.worldPosition);
+        ParticleManager.instance?.play(DynamicResourceDefine.Effect.EffExplore, event.selfCollider.node.worldPosition);
         AudioManager.instance.playSfx(DynamicResourceDefine.audio.SfxHit);
     }
 }
