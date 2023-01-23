@@ -1,11 +1,11 @@
 import { _decorator, Component, BoxCollider, Rect, v2, Vec3, macro, v3, math, director, Size, RigidBody, randomRange, resources } from 'cc';
 import { Actor } from '../actor/Actor';
 import { AudioManager } from '../audio/AudioManager';
-import { ParticleManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { UIManager } from '../ui/UIManager';
 import { ActorManager } from './ActorManager';
+import { ParticleManager } from '../effect/ParticleManager';
 const { ccclass, property } = _decorator;
 
 /**

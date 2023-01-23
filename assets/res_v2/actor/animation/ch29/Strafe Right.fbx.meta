@@ -1,0 +1,83 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "a4b9d083-c2ab-4ad6-a310-6049f7264986",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "271f1": {
+      "importer": "gltf-animation",
+      "uuid": "a4b9d083-c2ab-4ad6-a310-6049f7264986@271f1",
+      "displayName": "",
+      "id": "271f1",
+      "name": "Strafe Right.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.4333332777023315
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "c3157": {
+      "importer": "gltf-scene",
+      "uuid": "a4b9d083-c2ab-4ad6-a310-6049f7264986@c3157",
+      "displayName": "",
+      "id": "c3157",
+      "name": "Strafe Right.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "mixamo.com",
+        "duration": 1.4333332777023315,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Strafe Right",
+            "from": 0,
+            "to": 1.4333332777023315,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "a4b9d083-c2ab-4ad6-a310-6049f7264986@c3157",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "a4b9d083-c2ab-4ad6-a310-6049f7264986@c3157"
+      ]
+    }
+  }
+}

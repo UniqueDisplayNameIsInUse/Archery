@@ -1,0 +1,123 @@
+{
+  "ver": "2.3.0",
+  "importer": "gltf",
+  "imported": true,
+  "uuid": "c760bade-6f0c-45ad-ac70-74a568e86630",
+  "files": [],
+  "subMetas": {
+    "40586": {
+      "importer": "gltf-embeded-image",
+      "uuid": "c760bade-6f0c-45ad-ac70-74a568e86630@40586",
+      "displayName": "",
+      "id": "40586",
+      "name": "UnnamedImage.image",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "77941": {
+      "importer": "gltf-material",
+      "uuid": "c760bade-6f0c-45ad-ac70-74a568e86630@77941",
+      "displayName": "",
+      "id": "77941",
+      "name": "Material_118.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "043e3": {
+      "importer": "gltf-mesh",
+      "uuid": "c760bade-6f0c-45ad-ac70-74a568e86630@043e3",
+      "displayName": "",
+      "id": "043e3",
+      "name": "Object13_Material #118_0.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e39f7": {
+      "importer": "texture",
+      "uuid": "c760bade-6f0c-45ad-ac70-74a568e86630@e39f7",
+      "displayName": "",
+      "id": "e39f7",
+      "name": "UnnamedTexture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "linear",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "c760bade-6f0c-45ad-ac70-74a568e86630@40586"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "def62": {
+      "importer": "gltf-scene",
+      "uuid": "c760bade-6f0c-45ad-ac70-74a568e86630@def62",
+      "displayName": "",
+      "id": "def62",
+      "name": "gun_m4a1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "uri": "c760bade-6f0c-45ad-ac70-74a568e86630@40586"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "redirect": "c760bade-6f0c-45ad-ac70-74a568e86630@def62",
+    "assetFinder": {
+      "meshes": [
+        "c760bade-6f0c-45ad-ac70-74a568e86630@043e3"
+      ],
+      "skeletons": [],
+      "textures": [
+        "c760bade-6f0c-45ad-ac70-74a568e86630@e39f7"
+      ],
+      "materials": [
+        "c760bade-6f0c-45ad-ac70-74a568e86630@77941"
+      ],
+      "scenes": [
+        "c760bade-6f0c-45ad-ac70-74a568e86630@def62"
+      ]
+    }
+  }
+}

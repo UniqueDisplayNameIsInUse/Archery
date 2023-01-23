@@ -1,0 +1,83 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "300c45d1-521f-4cef-8277-c96dcc77238a",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "c9fc9": {
+      "importer": "gltf-animation",
+      "uuid": "300c45d1-521f-4cef-8277-c96dcc77238a@c9fc9",
+      "displayName": "",
+      "id": "c9fc9",
+      "name": "Standing Dive Forward.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 1,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.6333333253860474
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "6f95c": {
+      "importer": "gltf-scene",
+      "uuid": "300c45d1-521f-4cef-8277-c96dcc77238a@6f95c",
+      "displayName": "",
+      "id": "6f95c",
+      "name": "Standing Dive Forward.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "mixamo.com",
+        "duration": 1.6333333253860474,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Standing Dive Forward",
+            "from": 0,
+            "to": 1.6333333253860474,
+            "wrapMode": 1
+          }
+        ]
+      }
+    ],
+    "redirect": "300c45d1-521f-4cef-8277-c96dcc77238a@6f95c",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "300c45d1-521f-4cef-8277-c96dcc77238a@6f95c"
+      ]
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "240c6008-d2cc-4236-9a20-968a81929906",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "dddf0": {
+      "importer": "gltf-animation",
+      "uuid": "240c6008-d2cc-4236-9a20-968a81929906@dddf0",
+      "displayName": "",
+      "id": "dddf0",
+      "name": "Walking Backwards.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.399999976158142
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "8c511": {
+      "importer": "gltf-scene",
+      "uuid": "240c6008-d2cc-4236-9a20-968a81929906@8c511",
+      "displayName": "",
+      "id": "8c511",
+      "name": "Walking Backwards.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "mixamo.com",
+        "duration": 1.399999976158142,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Walking Backwards",
+            "from": 0,
+            "to": 1.399999976158142,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "240c6008-d2cc-4236-9a20-968a81929906@8c511",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "240c6008-d2cc-4236-9a20-968a81929906@8c511"
+      ]
+    }
+  }
+}

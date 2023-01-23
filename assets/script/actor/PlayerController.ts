@@ -4,10 +4,10 @@ import { VirtualInput } from '../input/VirtualInput';
 import { MathUtil } from '../util/MathUtil';
 import { Actor } from './Actor';
 import { StateDefine } from './StateDefine';
-import { ProjectileEmitter } from './ProjectileEmiiter';
 import { ActorManager } from '../level/ActorManager';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { AudioManager } from '../audio/AudioManager';
+import { ProjectileEmitter } from './ProjectileEmitter';
 const { ccclass, property, requireComponent } = _decorator;
 
 let tempForward = v3();

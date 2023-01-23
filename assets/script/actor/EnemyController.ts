@@ -1,8 +1,8 @@
 import { ccenum, CCFloat, CCInteger, Collider, Component, game, macro, math, Node, v3, Vec3, _decorator } from 'cc';
 import { ActorManager } from '../level/ActorManager';
 import { Actor } from './Actor';
-import { ProjectileEmitter } from './ProjectileEmiiter';
 import { StateDefine } from './StateDefine';
+import { ProjectileEmitter } from './ProjectileEmitter';
 const { ccclass, property, requireComponent } = _decorator;
 
 let temp = v3();

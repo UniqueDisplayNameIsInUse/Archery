@@ -1,10 +1,10 @@
 import { _decorator, Node, resources, Prefab, instantiate, director, math, Animation, SkeletalAnimationState, System } from 'cc';
 import { Actor } from '../actor/Actor';
 import { StateDefine } from '../actor/StateDefine';
-import { ParticleManager } from '../effect/EffectManager';
 import { Events } from '../events/Events';
 import { DynamicResourceDefine } from '../resource/ResourceDefine';
 import { Pools } from '../util/Pools';
+import { ParticleManager } from '../effect/ParticleManager';
 const { ccclass, property } = _decorator;
 
 /**

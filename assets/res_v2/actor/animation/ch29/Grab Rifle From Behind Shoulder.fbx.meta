@@ -1,0 +1,119 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "9310ae99-f912-498f-818e-86d4d7935607",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "ad76b": {
+      "importer": "gltf-animation",
+      "uuid": "9310ae99-f912-498f-818e-86d4d7935607@ad76b",
+      "displayName": "",
+      "id": "ad76b",
+      "name": "Grab Rifle From Behind Shoulder.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 1,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 3.5333333015441895
+        },
+        "events": [],
+        "embeddedPlayers": [],
+        "editorExtras": {
+          "embeddedPlayerGroups": []
+        },
+        "speed": 1
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "5479a": {
+      "importer": "gltf-animation",
+      "uuid": "9310ae99-f912-498f-818e-86d4d7935607@5479a",
+      "displayName": "",
+      "id": "5479a",
+      "name": "Pub Rilfe to behind.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 1,
+        "speed": -1,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 3.5333333015441895
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "54e5c": {
+      "importer": "gltf-scene",
+      "uuid": "9310ae99-f912-498f-818e-86d4d7935607@54e5c",
+      "displayName": "",
+      "id": "54e5c",
+      "name": "Grab Rifle From Behind Shoulder.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "mixamo.com",
+        "duration": 3.5333333015441895,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Grab Rifle From Behind Shoulder",
+            "from": 0,
+            "to": 3.5333333015441895,
+            "wrapMode": 1
+          },
+          {
+            "name": "Pub Rilfe to behind",
+            "from": 0,
+            "to": 3.5333333015441895,
+            "wrapMode": 1,
+            "speed": -1
+          }
+        ]
+      }
+    ],
+    "redirect": "9310ae99-f912-498f-818e-86d4d7935607@54e5c",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "9310ae99-f912-498f-818e-86d4d7935607@54e5c"
+      ]
+    }
+  }
+}

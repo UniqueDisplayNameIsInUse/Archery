@@ -1,0 +1,83 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "8e6ca934-85e0-48e6-b590-458ac71aac34",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "a01e6": {
+      "importer": "gltf-animation",
+      "uuid": "8e6ca934-85e0-48e6-b590-458ac71aac34@a01e6",
+      "displayName": "",
+      "id": "a01e6",
+      "name": "Dying.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 0,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 4.400000095367432
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "561aa": {
+      "importer": "gltf-scene",
+      "uuid": "8e6ca934-85e0-48e6-b590-458ac71aac34@561aa",
+      "displayName": "",
+      "id": "561aa",
+      "name": "Dying.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "mixamo.com",
+        "duration": 4.400000095367432,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Dying",
+            "from": 0,
+            "to": 4.400000095367432,
+            "wrapMode": 0
+          }
+        ]
+      }
+    ],
+    "redirect": "8e6ca934-85e0-48e6-b590-458ac71aac34@561aa",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "8e6ca934-85e0-48e6-b590-458ac71aac34@561aa"
+      ]
+    }
+  }
+}
